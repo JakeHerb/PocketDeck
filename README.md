@@ -10,6 +10,8 @@ Current TODO's are:
 
 [ ] Make mute button functional
 
+[ ] Get rid of "magic numbers" when it comes to layout, so it doesn't matter what device someone uses
+
 [ ] Make home page look nicer
 
 [ ] Make single device page look nicer
