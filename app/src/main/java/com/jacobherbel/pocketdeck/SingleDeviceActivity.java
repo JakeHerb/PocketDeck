@@ -54,7 +54,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
         }
     }
 
-    // Cuts the deck between 1/3 of its size, and 2/3 of its size
+    // Cuts the deck between 1/4 of its size, and 3/4 of its size
     public void cutDeck(View view) {
         int cutIndex = rn.nextInt(cardDeck.getCardsInDeck() / 2) + (cardDeck.getCardsInDeck() / 4);
         cardDeck.cut(cutIndex);
