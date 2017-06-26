@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.jacobherbel.pocketdeck.cardStuff.Card;
@@ -21,6 +22,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
     private Card[] hand = new Card[5];
     private int cardsInHand = 0;
     private int index = 0;
+    private Random rn = new Random(System.currentTimeMillis());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,6 @@ public class SingleDeviceActivity extends AppCompatActivity {
 
 
     public void getRandomCard(View view) {
-        //Random rn = new Random();
         ImageView card = (ImageView) findViewById(R.id.card1);
         card.setImageResource(cardDeck.next().getImage());
 
@@ -51,6 +52,14 @@ public class SingleDeviceActivity extends AppCompatActivity {
         else {
             //TODO add "replace a current card" or "toss" buttons when user hand is full
         }
+    }
+
+    // Cuts the deck between 1/3 of its size, and 2/3 of its size
+    public void cutDeck(View view) {
+        int cutIndex = rn.nextInt(cardDeck.getCardsInDeck() / 2) + (cardDeck.getCardsInDeck() / 4);
+        cardDeck.cut(cutIndex);
+        Button btn = (Button) findViewById(R.id.newCardBtn); // Changing text of the button for debugging purposes
+        btn.setText("" + cutIndex); // This line is for debugging purposes also
     }
 
 

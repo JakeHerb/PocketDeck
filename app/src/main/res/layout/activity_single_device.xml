@@ -141,4 +141,13 @@
         android:text="Grab a new card"
         android:onClick="getRandomCard"/>
 
+    <Button
+        android:id="@+id/cutDeckBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="18dp"
+        android:text="Cut the Deck"
+        android:onClick="cutDeck"/>
+
 </LinearLayout>
