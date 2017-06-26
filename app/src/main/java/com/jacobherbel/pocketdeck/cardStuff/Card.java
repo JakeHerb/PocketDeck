@@ -1,23 +1,40 @@
 package com.jacobherbel.pocketdeck.cardStuff;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+
+import java.io.IOException;
+
 /**
  * Created by jacobherbel on 6/20/17.
  */
 public class Card {
 
-    private final int value;
     private final Suit suit;
-    private final String fileName;
+    private final CardValue cardValue;
+    private final int imageID;
 
-    public Card(int value, Suit suit, String fileName) {
-        this.value = value;
+    public Card(Context context, CardValue cardValue, Suit suit) throws IOException {
+        this.cardValue = cardValue;
         this.suit = suit;
-        this.fileName = fileName;
+        String name = "" + getSuit().getSuitName() + "_" + getCardValue().getValueName();
+        imageID = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
     }
 
-    // Returns the fileName of the image as a String
-    public String fileName() {
-        return fileName;
+    public Suit getSuit() {
+        return suit;
     }
+
+    public CardValue getCardValue() {
+        return cardValue;
+    }
+
+    public int getImage() {
+        return imageID;
+    }
+
+
 }
 

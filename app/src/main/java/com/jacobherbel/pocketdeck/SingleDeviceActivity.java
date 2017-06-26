@@ -1,5 +1,6 @@
 package com.jacobherbel.pocketdeck;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,8 @@ import java.util.Random;
 
 public class SingleDeviceActivity extends AppCompatActivity {
 
-    private CardDeck cardDeck = new CardDeck();
+    private Context context;
+    private CardDeck cardDeck;
     private Card[] hand = new Card[5];
     private int cardsInHand = 0;
     private int index = 0;
@@ -24,16 +26,15 @@ public class SingleDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_device);
+        context = this;
+        cardDeck = new CardDeck(context);
     }
+
 
     public void getRandomCard(View view) {
         //Random rn = new Random();
-        //String pulledCard = cardDeck.cardAt(rn.nextInt(52)).fileName();
-        String pulledCard = cardDeck.cardAt(index++).fileName();
-        Resources res = getResources();
-        int resID = res.getIdentifier(pulledCard, "drawable", getPackageName());
         ImageView card = (ImageView) findViewById(R.id.card1);
-        card.setImageResource(resID);
+        card.setImageResource(cardDeck.next().getImage());
 
         ImageView topCard = (ImageView) findViewById(R.id.topOfDeck);
         TranslateAnimation moveLefttoRight = new TranslateAnimation(0, 300, 0, 0); // This stuff just slides the card to the right

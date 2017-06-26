@@ -1,16 +1,21 @@
 package com.jacobherbel.pocketdeck.cardStuff;
 
 /**
- * Created by jacobherbel on 6/20/17.
+ * Created by jacobherbel on 6/26/17.
  */
-public class Suit {
+public enum Suit {
+    SPADES("spades"),
+    DIAMONDS("diamonds"),
+    CLUBS("clubs"),
+    HEARTS("hearts");
 
-    String suitName;
-    boolean isBlack;
-    boolean isRed;
-    public Suit(String suitName, boolean isBlack) {
+    private String suitName;
+
+    Suit(String suitName) {
         this.suitName = suitName;
-        this.isBlack = isBlack;
-        this.isRed = !isBlack;
+    }
+
+    public String getSuitName() {
+        return suitName;
     }
 }
