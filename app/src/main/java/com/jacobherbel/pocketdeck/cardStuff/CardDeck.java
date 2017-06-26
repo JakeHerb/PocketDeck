@@ -40,7 +40,7 @@ public class CardDeck {
     // Returns the card at the top of the deck, while also removing it
     public Card next() {
         --cardsInDeck;
-        return deck.pop();
+        return deck.pollFirst();
     }
 
     // Finds the given index, and places all cards that come after it on the top of the deck

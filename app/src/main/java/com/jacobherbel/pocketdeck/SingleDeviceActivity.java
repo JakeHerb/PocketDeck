@@ -58,8 +58,6 @@ public class SingleDeviceActivity extends AppCompatActivity {
     public void cutDeck(View view) {
         int cutIndex = rn.nextInt(cardDeck.getCardsInDeck() / 2) + (cardDeck.getCardsInDeck() / 4);
         cardDeck.cut(cutIndex);
-        Button btn = (Button) findViewById(R.id.newCardBtn); // Changing text of the button for debugging purposes
-        btn.setText("" + cutIndex); // This line is for debugging purposes also
     }
 
 
