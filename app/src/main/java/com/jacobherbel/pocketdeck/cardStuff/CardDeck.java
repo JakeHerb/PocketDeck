@@ -16,6 +16,7 @@ public class CardDeck {
     private LinkedList<Card> deck = new LinkedList<>();
     Context context;
     private int cardsInDeck = 0;
+    Random rn = new Random(System.currentTimeMillis());
 
     public CardDeck(Context context) {
         this.context = context;
@@ -53,4 +54,5 @@ public class CardDeck {
     public int getCardsInDeck() {
         return cardsInDeck;
     }
+
 }

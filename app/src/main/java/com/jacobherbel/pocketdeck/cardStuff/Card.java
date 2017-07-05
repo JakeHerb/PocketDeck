@@ -14,13 +14,15 @@ public class Card {
 
     private final Suit suit;
     private final CardValue cardValue;
-    private final int imageID;
+    private final int frontImageID;
+    private final int backImageID;
 
     public Card(Context context, CardValue cardValue, Suit suit) throws IOException {
         this.cardValue = cardValue;
         this.suit = suit;
         String name = "" + getSuit().getSuitName() + "_" + getCardValue().getValueName();
-        imageID = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+        frontImageID = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+        backImageID = context.getResources().getIdentifier("back", "drawable", context.getPackageName());
     }
 
     public Suit getSuit() {
@@ -31,9 +33,11 @@ public class Card {
         return cardValue;
     }
 
-    public int getImage() {
-        return imageID;
+    public int getFrontImage() {
+        return frontImageID;
     }
+
+    public int getBackImage() { return backImageID; }
 
 
 }
