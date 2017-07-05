@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,9 +39,24 @@ public class SingleDeviceActivity extends AppCompatActivity {
 
 
     public void getTopCard(View view) {
+        Button keepbtn = (Button) findViewById(R.id.newCardBtn);
         ImageView card = (ImageView) findViewById(R.id.card1);
         Card newCard = cardDeck.next();
-        horizontalReveal(card, newCard);
+        if (keepbtn.getText().equals("Grab a new card")) {
+            horizontalReveal(card, newCard);
+            keepbtn.setText("Keep card");
+        }
+        else if (keepbtn.getText().equals("Keep card")) {
+            addToHand(view, newCard);
+            card.setImageResource(newCard.getBackImage());
+            keepbtn.setText("Grab a new card");
+            horizontalReveal((ImageView) findViewById(R.id.hand1), newCard);
+        }
+
+        else {
+            keepbtn.setText("An issue occurred");
+        }
+
     }
 
     public void addToHand(View view, Card card) {
@@ -79,5 +95,6 @@ public class SingleDeviceActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 }
