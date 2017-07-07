@@ -13,14 +13,13 @@ import java.util.Random;
  */
 public class CardDeck {
 
-    private LinkedList<Card> deck = new LinkedList<>();
+    private LinkedList<Card> deck = new LinkedList<>(); // TODO change to a LinkedList of CardViews instead of Cards
     Context context;
     private int cardsInDeck = 0;
     Random rn = new Random(System.currentTimeMillis());
 
     public CardDeck(Context context) {
         this.context = context;
-        fillDeck();
     }
 
     // Initializes the deck to have all 52 cards in order
@@ -42,6 +41,16 @@ public class CardDeck {
     public Card next() {
         --cardsInDeck;
         return deck.pollFirst();
+    }
+
+    public Card peek() {
+        return deck.peek();
+    }
+
+    // Adds the card to the end of the list
+    public void add(Card card) {
+        cardsInDeck++;
+        deck.add(card);
     }
 
     // Finds the given index, and places all cards that come after it on the top of the deck

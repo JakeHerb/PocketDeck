@@ -16,14 +16,14 @@
         android:layout_marginTop="50dp"
         android:orientation="vertical">
 
-        <ImageView
+        <com.jacobherbel.pocketdeck.cardStuff.CardView
             android:id="@+id/bottomOfDeck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:src="@drawable/back" />
 
-        <ImageView
+        <com.jacobherbel.pocketdeck.cardStuff.CardView
             android:id="@+id/topOfDeck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
 
     </RelativeLayout>
 
-    <ImageView
+    <com.jacobherbel.pocketdeck.cardStuff.CardView
         android:id="@+id/card1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,48 +60,14 @@
         android:text="Cut the Deck"
         android:onClick="cutDeck"/>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/handLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="20dp"
         android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/hand1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/back"/>
 
-        <ImageView
-            android:id="@+id/hand2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/back"/>
-
-        <ImageView
-            android:id="@+id/hand3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/back"/>
-
-        <ImageView
-            android:id="@+id/hand4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/back"/>
-
-        <ImageView
-            android:id="@+id/hand5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/back"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

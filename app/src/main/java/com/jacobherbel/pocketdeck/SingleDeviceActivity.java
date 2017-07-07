@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,19 +15,25 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.jacobherbel.pocketdeck.cardStuff.Card;
 import com.jacobherbel.pocketdeck.cardStuff.CardDeck;
+import com.jacobherbel.pocketdeck.cardStuff.CardValue;
+import com.jacobherbel.pocketdeck.cardStuff.CardView;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SingleDeviceActivity extends AppCompatActivity {
 
     private Context context;
     private CardDeck cardDeck;
-    private Card[] hand = new Card[5];
+    private CardDeck hand;
     private int cardsInHand = 0;
     private Random rn = new Random(System.currentTimeMillis());
+
+    public int previousHandView; // TODO delete this after making CardDeck a list of CardViews
 
 
     @Override
@@ -35,22 +42,24 @@ public class SingleDeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_device);
         context = this;
         cardDeck = new CardDeck(context);
+        hand = new CardDeck(context);
+        cardDeck.fillDeck();
     }
 
 
     public void getTopCard(View view) {
         Button keepbtn = (Button) findViewById(R.id.newCardBtn);
-        ImageView card = (ImageView) findViewById(R.id.card1);
-        Card newCard = cardDeck.next();
+        CardView cardImage = (CardView) findViewById(R.id.card1);
         if (keepbtn.getText().equals("Grab a new card")) {
-            horizontalReveal(card, newCard);
+            Card newCard = cardDeck.next();
+            cardImage.setCard(newCard);
+            cardImage.flipCard();
             keepbtn.setText("Keep card");
         }
         else if (keepbtn.getText().equals("Keep card")) {
-            addToHand(view, newCard);
-            card.setImageResource(newCard.getBackImage());
+            addToHand(view, cardImage.getCard());
+            cardImage.flipCard();
             keepbtn.setText("Grab a new card");
-            horizontalReveal((ImageView) findViewById(R.id.hand1), newCard);
         }
 
         else {
@@ -59,14 +68,41 @@ public class SingleDeviceActivity extends AppCompatActivity {
 
     }
 
+    // Adds a new card to the hand and responds according to how many cards are already in the hand
     public void addToHand(View view, Card card) {
-        if (cardsInHand <= 5) {
-            hand[cardsInHand] = card;
+        RelativeLayout handLayout = (RelativeLayout) findViewById(R.id.handLayout);
+        CardView newHandView = new CardView(context);
+        newHandView.setLayoutParams(new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT));
+        // If else block generates a new ID depending on what version of Android the user is using
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            newHandView.setId(generateViewId());
+        } else {
+            newHandView.setId(View.generateViewId());
+        }
+        // end TODO
+        if (cardsInHand == 0) {
+            hand.add(card);
             cardsInHand++;
+            newHandView.setCard(card);
+            handLayout.addView(newHandView);
+            previousHandView = newHandView.getId();
+
+        }
+        else if (cardsInHand <= 5) {
+            hand.add(card);
+            cardsInHand++;
+            newHandView.setCard(card);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) newHandView.getLayoutParams();
+            params.addRule(RelativeLayout.RIGHT_OF, previousHandView);
+            handLayout.addView(newHandView);
+            previousHandView = newHandView.getId();
         }
         else {
             //TODO add "replace a current card" or "toss" buttons when user hand is full
         }
+        newHandView.flipCard();
     }
 
     // Cuts the deck between 1/4 of its size, and 3/4 of its size
@@ -75,26 +111,30 @@ public class SingleDeviceActivity extends AppCompatActivity {
         cardDeck.cut(cutIndex);
     }
 
-    // Flips the card by 90 degrees, swaps out the image, and flips the card another 90 degrees
-    public void horizontalReveal(ImageView view, Card card) {
-        final ImageView mview = view; // Must be declared final for use in run method
-        final Card mcard = card; // Must be declared final for use in run method
-        view.animate()
-                .rotationYBy(90)
-                .setDuration(300)
-                .setInterpolator(new LinearInterpolator())
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        mview.setImageResource(mcard.getFrontImage());
-                        mview.setRotationY(-90); // Must be set to -90 or else the image will show up mirrored
-                        mview.animate()
-                                .rotationYBy(90)
-                                .setDuration(300)
-                                .setInterpolator(new LinearInterpolator());
-                    }
-                });
+
+
+    // Taken from a user online as a way to generate ID's for API's less than version 17.
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
+
+    /**
+     * Generate a value suitable for use in generateViewID
+     * This value will not collide with ID values generated at build time by aapt for R.id.
+     *
+     * @return a generated ID value
+     */
+    public static int generateViewId() {
+        for (;;) {
+            final int result = sNextGeneratedId.get();
+            // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
+            int newValue = result + 1;
+            if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+            if (sNextGeneratedId.compareAndSet(result, newValue)) {
+                return result;
+            }
+        }
     }
+
+
 
 
 }
