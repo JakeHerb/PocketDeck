@@ -1,25 +1,15 @@
 package com.jacobherbel.pocketdeck;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Build;
-import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jacobherbel.pocketdeck.cardStuff.Card;
 import com.jacobherbel.pocketdeck.cardStuff.CardDeck;
-import com.jacobherbel.pocketdeck.cardStuff.CardValue;
 import com.jacobherbel.pocketdeck.cardStuff.CardView;
 
 import java.util.Random;
@@ -27,10 +17,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class SingleDeviceActivity extends AppCompatActivity {
 
-    private Context context;
-    private CardDeck cardDeck;
-    private CardDeck hand;
-    private int cardsInHand = 0;
+    private Context mContext;
+    private CardDeck mCardDeck;
+    private CardDeck mHand;
+    private int mCardsInHand = 0;
     private Random rn = new Random(System.currentTimeMillis());
 
     public int previousHandView; // TODO delete this after making CardDeck a list of CardViews
@@ -40,24 +30,24 @@ public class SingleDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_device);
-        context = this;
-        cardDeck = new CardDeck(context);
-        hand = new CardDeck(context);
-        cardDeck.fillDeck();
+        mContext = this;
+        mCardDeck = new CardDeck(mContext);
+        mHand = new CardDeck(mContext);
+        mCardDeck.fillDeck();
     }
 
 
-    public void getTopCard(View view) {
+    public void getTopCard(View mView) {
         Button keepbtn = (Button) findViewById(R.id.newCardBtn);
         CardView cardImage = (CardView) findViewById(R.id.card1);
         if (keepbtn.getText().equals("Grab a new card")) {
-            Card newCard = cardDeck.next();
+            Card newCard = mCardDeck.next();
             cardImage.setCard(newCard);
             cardImage.flipCard();
             keepbtn.setText("Keep card");
         }
         else if (keepbtn.getText().equals("Keep card")) {
-            addToHand(view, cardImage.getCard());
+            addToHand(mView, cardImage.getCard());
             cardImage.flipCard();
             keepbtn.setText("Grab a new card");
         }
@@ -69,9 +59,9 @@ public class SingleDeviceActivity extends AppCompatActivity {
     }
 
     // Adds a new card to the hand and responds according to how many cards are already in the hand
-    public void addToHand(View view, Card card) {
+    public void addToHand(View mView, Card mCard) {
         RelativeLayout handLayout = (RelativeLayout) findViewById(R.id.handLayout);
-        CardView newHandView = new CardView(context);
+        CardView newHandView = new CardView(mContext);
         newHandView.setLayoutParams(new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT));
@@ -82,18 +72,18 @@ public class SingleDeviceActivity extends AppCompatActivity {
             newHandView.setId(View.generateViewId());
         }
         // end TODO
-        if (cardsInHand == 0) {
-            hand.add(card);
-            cardsInHand++;
-            newHandView.setCard(card);
+        if (mCardsInHand == 0) {
+            mHand.add(mCard);
+            mCardsInHand++;
+            newHandView.setCard(mCard);
             handLayout.addView(newHandView);
             previousHandView = newHandView.getId();
 
         }
-        else if (cardsInHand <= 5) {
-            hand.add(card);
-            cardsInHand++;
-            newHandView.setCard(card);
+        else if (mCardsInHand <= 5) {
+            mHand.add(mCard);
+            mCardsInHand++;
+            newHandView.setCard(mCard);
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) newHandView.getLayoutParams();
             params.addRule(RelativeLayout.RIGHT_OF, previousHandView);
             handLayout.addView(newHandView);
@@ -106,9 +96,9 @@ public class SingleDeviceActivity extends AppCompatActivity {
     }
 
     // Cuts the deck between 1/4 of its size, and 3/4 of its size
-    public void cutDeck(View view) {
-        int cutIndex = rn.nextInt(cardDeck.getCardsInDeck() / 2) + (cardDeck.getCardsInDeck() / 4);
-        cardDeck.cut(cutIndex);
+    public void cutDeck(View mView) {
+        int cutIndex = rn.nextInt(mCardDeck.getCardsInDeck() / 2) + (mCardDeck.getCardsInDeck() / 4);
+        mCardDeck.cut(cutIndex);
     }
 
 

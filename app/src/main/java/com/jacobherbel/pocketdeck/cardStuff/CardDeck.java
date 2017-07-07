@@ -13,13 +13,13 @@ import java.util.Random;
  */
 public class CardDeck {
 
-    private LinkedList<Card> deck = new LinkedList<>(); // TODO change to a LinkedList of CardViews instead of Cards
-    Context context;
-    private int cardsInDeck = 0;
+    private LinkedList<Card> mDeck = new LinkedList<>(); // TODO change to a LinkedList of CardViews instead of Cards
+    Context mContext;
+    private int mCardsInDeck = 0;
     Random rn = new Random(System.currentTimeMillis());
 
     public CardDeck(Context context) {
-        this.context = context;
+        this.mContext = context;
     }
 
     // Initializes the deck to have all 52 cards in order
@@ -27,8 +27,8 @@ public class CardDeck {
         for (Suit suit : Suit.values()) {
             for (CardValue value : CardValue.values()) {
                 try {
-                    deck.add(new Card(context, value, suit));
-                    ++cardsInDeck;
+                    mDeck.add(new Card(mContext, value, suit));
+                    ++mCardsInDeck;
                 }
                 catch (IOException e) {
                     throw new Error("Card Picture missing");
@@ -39,29 +39,29 @@ public class CardDeck {
 
     // Returns the card at the top of the deck, while also removing it
     public Card next() {
-        --cardsInDeck;
-        return deck.pollFirst();
+        --mCardsInDeck;
+        return mDeck.pollFirst();
     }
 
     public Card peek() {
-        return deck.peek();
+        return mDeck.peek();
     }
 
     // Adds the card to the end of the list
     public void add(Card card) {
-        cardsInDeck++;
-        deck.add(card);
+        mCardsInDeck++;
+        mDeck.add(card);
     }
 
     // Finds the given index, and places all cards that come after it on the top of the deck
     public void cut(int cutIndex) {
         for (int i = 0; i < cutIndex; ++i) {
-            deck.add(deck.poll());
+            mDeck.add(mDeck.poll());
         }
     }
 
     public int getCardsInDeck() {
-        return cardsInDeck;
+        return mCardsInDeck;
     }
 
 }

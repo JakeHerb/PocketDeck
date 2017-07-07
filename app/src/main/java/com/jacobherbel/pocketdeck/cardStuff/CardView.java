@@ -17,8 +17,8 @@ import java.util.jar.Attributes;
  */
 public class CardView extends ImageView {
 
-    Card mcard;
-    boolean isRevealed = false;
+    Card mCard;
+    boolean mRevealed;
     public CardView(Context context) {
         super(context);
         init(context);
@@ -36,19 +36,20 @@ public class CardView extends ImageView {
 
     public CardView(Context context, AttributeSet attrs, int defStyle, Card card) {
         super(context, attrs, defStyle);
-        this.mcard = card;
+        this.mCard = card;
         init(context);
     }
 
     private void init(Context context) {
         Resources res = this.getResources();
+        mRevealed = false;
         this.setImageResource(R.drawable.back);
     }
 
 
     public Card getCard() {
-        if (this.mcard != null) {
-            return this.mcard;
+        if (this.mCard != null) {
+            return this.mCard;
         }
         else {
             return null;
@@ -56,51 +57,51 @@ public class CardView extends ImageView {
     }
 
     public void setCard(Card newCard) {
-        this.mcard = newCard;
+        this.mCard = newCard;
     }
 
     public void horizontalReveal() {
-        final CardView cview = this;
-        cview.animate()
+        final CardView cView = this;
+        cView.animate()
                 .rotationYBy(90)
                 .setDuration(300)
                 .setInterpolator(new LinearInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
-                        cview.setImageResource(mcard.getFrontImage());
-                        cview.setRotationY(-90); // Must be set to -90 or else the image will show up mirrored
-                        cview.animate()
+                        cView.setImageResource(mCard.getFrontImage());
+                        cView.setRotationY(-90); // Must be set to -90 or else the image will show up mirrored
+                        cView.animate()
                                 .rotationYBy(90)
                                 .setDuration(300)
                                 .setInterpolator(new LinearInterpolator());
                     }
                 });
-        isRevealed = true;
+        mRevealed = true;
     }
 
     public void horizontalReset() {
-        final CardView cview = this;
-        cview.animate()
+        final CardView cView = this;
+        cView.animate()
                 .rotationYBy(90)
                 .setDuration(300)
                 .setInterpolator(new LinearInterpolator())
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
-                        cview.setImageResource(mcard.getBackImage());
-                        cview.setRotationY(-90); // Must be set to -90 or else the image will show up mirrored
-                        cview.animate()
+                        cView.setImageResource(mCard.getBackImage());
+                        cView.setRotationY(-90); // Must be set to -90 or else the image will show up mirrored
+                        cView.animate()
                                 .rotationYBy(90)
                                 .setDuration(300)
                                 .setInterpolator(new LinearInterpolator());
                     }
                 });
-        isRevealed = false;
+        mRevealed = false;
     }
 
     public void flipCard() {
-        if (isRevealed) {
+        if (mRevealed) {
             horizontalReset();
         }
         else {

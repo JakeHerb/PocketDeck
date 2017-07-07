@@ -12,32 +12,32 @@ import java.io.IOException;
  */
 public class Card {
 
-    private final Suit suit;
-    private final CardValue cardValue;
-    private final int frontImageID;
-    private final int backImageID;
+    private final Suit mSuit;
+    private final CardValue mCardValue;
+    private final int mFrontImageID;
+    private final int mBackImageID;
 
     public Card(Context context, CardValue cardValue, Suit suit) throws IOException {
-        this.cardValue = cardValue;
-        this.suit = suit;
+        mCardValue = cardValue;
+        mSuit = suit;
         String name = "" + getSuit().getSuitName() + "_" + getCardValue().getValueName();
-        frontImageID = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-        backImageID = context.getResources().getIdentifier("back", "drawable", context.getPackageName());
+        mFrontImageID = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+        mBackImageID = context.getResources().getIdentifier("back", "drawable", context.getPackageName());
     }
 
     public Suit getSuit() {
-        return suit;
+        return mSuit;
     }
 
     public CardValue getCardValue() {
-        return cardValue;
+        return mCardValue;
     }
 
     public int getFrontImage() {
-        return frontImageID;
+        return mFrontImageID;
     }
 
-    public int getBackImage() { return backImageID; }
+    public int getBackImage() { return mBackImageID; }
 
 
 }
