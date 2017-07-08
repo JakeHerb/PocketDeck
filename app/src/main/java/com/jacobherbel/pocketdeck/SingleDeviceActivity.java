@@ -45,14 +45,11 @@ public class SingleDeviceActivity extends AppCompatActivity {
             cardImage.setCard(newCard);
             cardImage.flipCard();
             keepbtn.setText("Keep card");
-        }
-        else if (keepbtn.getText().equals("Keep card")) {
+        } else if (keepbtn.getText().equals("Keep card")) {
             addToHand(mView, cardImage.getCard());
             cardImage.flipCard();
             keepbtn.setText("Grab a new card");
-        }
-
-        else {
+        } else {
             keepbtn.setText("An issue occurred");
         }
 
@@ -79,8 +76,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
             handLayout.addView(newHandView);
             previousHandView = newHandView.getId();
 
-        }
-        else if (mCardsInHand <= 5) {
+        } else if (mCardsInHand <= 5) {
             mHand.add(mCard);
             mCardsInHand++;
             newHandView.setCard(mCard);
@@ -88,8 +84,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
             params.addRule(RelativeLayout.RIGHT_OF, previousHandView);
             handLayout.addView(newHandView);
             previousHandView = newHandView.getId();
-        }
-        else {
+        } else {
             //TODO add "replace a current card" or "toss" buttons when user hand is full
         }
         newHandView.flipCard();
