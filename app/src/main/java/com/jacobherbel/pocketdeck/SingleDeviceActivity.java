@@ -14,6 +14,7 @@ import com.jacobherbel.pocketdeck.cardStuff.Card;
 import com.jacobherbel.pocketdeck.cardStuff.CardDeck;
 import com.jacobherbel.pocketdeck.cardStuff.CardView;
 
+import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -39,38 +40,36 @@ public class SingleDeviceActivity extends AppCompatActivity {
 
 
     public void getTopCard(View view) {
-//        Button keepbtn = (Button) findViewById(R.id.newCardBtn);
-//        CardView topCard = (CardView) findViewById(R.id.card1);
-//        if (keepbtn.getText().equals("Grab a new card")) {
-//            topCard = mCardDeck.nextView();
-//            topCard.flipCard();
-//            keepbtn.setText("Keep card");
-//        } else if (keepbtn.getText().equals("Keep card")) {
-//            addToHand(view, topCard);
-//            topCard.flipCard();
-//            keepbtn.setText("Grab a new card");
-//        } else {
-//            keepbtn.setText("An issue occurred");
-//        }
+        Button keepbtn = (Button) findViewById(R.id.newCardBtn);
         CardView topCard = (CardView) findViewById(R.id.card1);
-        CardView newCard = mCardDeck.nextView();
-        mUtils.replaceView(topCard, newCard);
-        newCard.flipCard();
+        if (keepbtn.getText().equals("Grab a new card")) {
+            topCard.setCard(mCardDeck.peek().getCard());
+            topCard.flipCard();
+            keepbtn.setText("Keep card");
+        } else if (keepbtn.getText().equals("Keep card")) {
+            addToHand(mCardDeck.nextView());
+            topCard.flipCard();
+            keepbtn.setText("Grab a new card");
+        } else {
+            keepbtn.setText("An issue occurred");
+        }
+
+
 
     }
 
     // Adds a new card to the hand and responds according to how many cards are already in the hand
-    public void addToHand(View view, CardView cardView) {
+    public void addToHand(CardView cardView) {
         RelativeLayout handLayout = (RelativeLayout) findViewById(R.id.handLayout);
         if (mCardsInHand == 0) {
             mHand.add(cardView);
             mCardsInHand++;
             handLayout.addView(cardView);
         } else if (mCardsInHand <= 5) {
-            mHand.add(cardView);
             mCardsInHand++;
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) cardView.getLayoutParams();
-            params.addRule(RelativeLayout.RIGHT_OF, mHand.peek().getID());
+            params.addRule(RelativeLayout.RIGHT_OF, mHand.peekLast().getID());
+            mHand.add(cardView);
             handLayout.addView(cardView);
         } else {
             //TODO add "replace a current card" or "toss" buttons when user hand is full

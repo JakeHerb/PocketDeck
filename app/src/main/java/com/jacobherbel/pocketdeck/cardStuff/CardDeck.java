@@ -50,15 +50,20 @@ public class CardDeck {
         }
     }
 
-    // Returns the most recently added CardView, while also removing it
+    // Returns the first added CardView, while also removing it
     public CardView nextView() {
         --mCardsInDeck;
-        return mDeck.pollFirst();
+        return mDeck.poll();
+    }
+
+    // Returns, but does not retrieve, the first added CardView
+    public CardView peek() {
+        return mDeck.peek();
     }
 
     // Returns, but does not retrieve, the most recently added CardView
-    public CardView peek() {
-        return mDeck.peek();
+    public CardView peekLast() {
+        return mDeck.peekLast();
     }
 
     // Adds the card to the end of the list
@@ -77,6 +82,11 @@ public class CardDeck {
     public int getCardsInDeck() {
         return mCardsInDeck;
     }
+
+    public LinkedList<CardView> getLinkedList() {
+        return mDeck;
+    }
+
 
     // Taken from a user online as a way to generate ID's for API's less than version 17.
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
