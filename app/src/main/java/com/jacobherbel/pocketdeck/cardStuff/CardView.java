@@ -24,6 +24,12 @@ public class CardView extends ImageView {
         init(context);
     }
 
+    public CardView(Context context, Card card) {
+        super(context);
+        this.mCard = card;
+        init(context);
+    }
+
     public CardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -107,5 +113,10 @@ public class CardView extends ImageView {
         else {
             horizontalReveal();
         }
+    }
+
+    // Returns the resource ID
+    public int getID() {
+        return this.getId();
     }
 }
