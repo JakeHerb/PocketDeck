@@ -50,6 +50,14 @@ public class CardDeck {
         }
     }
 
+    // Grabs random cards from the unshuffled portion of the deck and places them at the end until all cards are shuffled
+    public void shuffle() {
+        for (int i = mCardsInDeck; i > 0; i--) {
+            int tempIndex = rn.nextInt(i);
+            mDeck.add(mDeck.remove(tempIndex));
+        }
+    }
+
     // Returns the first added CardView, while also removing it
     public CardView nextView() {
         --mCardsInDeck;

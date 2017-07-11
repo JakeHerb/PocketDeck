@@ -37,29 +37,47 @@
         android:layout_marginTop="50dp"
         android:src="@drawable/back"/>
 
-    <Button
-        android:id="@+id/newCardBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="18dp"
-        android:text="Grab a new card"
-        android:onClick="getTopCard"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/cutDeckBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="18dp"
-        android:text="Cut the Deck"
-        android:onClick="cutDeck"/>
+        <Button
+            android:id="@+id/newCardBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:text="Grab a new card"
+            android:onClick="getTopCard"/>
+
+        <Button
+            android:id="@+id/cutDeckBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="Cut the Deck"
+            android:layout_below="@id/newCardBtn"
+            android:onClick="cutDeck"/>
+
+        <Button
+            android:id="@+id/shuffleDeckBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/cutDeckBtn"
+            android:layout_marginTop="5dp"
+            android:text="Shuffle the Deck"
+            android:onClick="shuffleDeck"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/handLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:layout_gravity="center">
 
 

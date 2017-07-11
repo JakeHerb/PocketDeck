@@ -53,9 +53,6 @@ public class SingleDeviceActivity extends AppCompatActivity {
         } else {
             keepbtn.setText("An issue occurred");
         }
-
-
-
     }
 
     // Adds a new card to the hand and responds according to how many cards are already in the hand
@@ -78,9 +75,14 @@ public class SingleDeviceActivity extends AppCompatActivity {
     }
 
     // Cuts the deck between 1/4 of its size, and 3/4 of its size
-    public void cutDeck(View mView) {
+    public void cutDeck(View View) {
         int cutIndex = rn.nextInt(mCardDeck.getCardsInDeck() / 2) + (mCardDeck.getCardsInDeck() / 4);
         mCardDeck.cut(cutIndex);
+    }
+
+    // Shuffles the deck
+    public void shuffleDeck(View view) {
+        mCardDeck.shuffle();
     }
 
 }
