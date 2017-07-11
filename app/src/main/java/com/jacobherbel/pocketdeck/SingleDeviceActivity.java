@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.jacobherbel.pocketdeck.cardStuff.Card;
 import com.jacobherbel.pocketdeck.cardStuff.CardDeck;
 import com.jacobherbel.pocketdeck.cardStuff.CardView;
+import com.jacobherbel.pocketdeck.cardStuff.Hand;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -22,8 +24,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
 
     private Context mContext;
     private CardDeck mCardDeck;
-    private CardDeck mHand;
-    private int mCardsInHand = 0;
+    private Hand mHand;
     private Random rn = new Random(System.currentTimeMillis());
     private ViewUtils mUtils = new ViewUtils();
 
@@ -34,8 +35,10 @@ public class SingleDeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_device);
         mContext = this;
         mCardDeck = new CardDeck(mContext);
-        mHand = new CardDeck(mContext);
+        mHand = new Hand(mContext);
         mCardDeck.fillDeck();
+        LinearLayout wholeScreen = (LinearLayout) findViewById(R.id.singleDeviceActivityLayout);
+        wholeScreen.addView(mHand.getmHandLayout());
     }
 
 
@@ -55,23 +58,8 @@ public class SingleDeviceActivity extends AppCompatActivity {
         }
     }
 
-    // Adds a new card to the hand and responds according to how many cards are already in the hand
     public void addToHand(CardView cardView) {
-        RelativeLayout handLayout = (RelativeLayout) findViewById(R.id.handLayout);
-        if (mCardsInHand == 0) {
-            mHand.add(cardView);
-            mCardsInHand++;
-            handLayout.addView(cardView);
-        } else if (mCardsInHand <= 5) {
-            mCardsInHand++;
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) cardView.getLayoutParams();
-            params.addRule(RelativeLayout.RIGHT_OF, mHand.peekLast().getID());
-            mHand.add(cardView);
-            handLayout.addView(cardView);
-        } else {
-            //TODO add "replace a current card" or "toss" buttons when user hand is full
-        }
-        cardView.flipCard();
+        mHand.add(cardView);
     }
 
     // Cuts the deck between 1/4 of its size, and 3/4 of its size

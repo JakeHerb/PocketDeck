@@ -64,12 +64,12 @@ public class CardDeck {
         return mDeck.poll();
     }
 
-    // Returns, but does not retrieve, the first added CardView
+    // Returns, but does not remove, the first added CardView
     public CardView peek() {
         return mDeck.peek();
     }
 
-    // Returns, but does not retrieve, the most recently added CardView
+    // Returns, but does not remove, the most recently added CardView
     public CardView peekLast() {
         return mDeck.peekLast();
     }
@@ -89,10 +89,6 @@ public class CardDeck {
 
     public int getCardsInDeck() {
         return mCardsInDeck;
-    }
-
-    public LinkedList<CardView> getLinkedList() {
-        return mDeck;
     }
 
 
