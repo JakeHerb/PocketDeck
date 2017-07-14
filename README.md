@@ -2,7 +2,11 @@
 Currently the app is very much in development. Right now, the goal isn't to have it looking pretty, but to get core functionality started.
 Current TODO's are:
 
-[ ] Create a dynamic player hand
+[X] Create a dynamic player hand
+
+[ ] Add animation to player hand, allowing as many cards as the user wants, and ability to hide the hand
+
+[ ] Get rid of buttons, allowing the user to place cards by interacting with the deck
 
 [ ] Allow user to place cards on their "table"
 
