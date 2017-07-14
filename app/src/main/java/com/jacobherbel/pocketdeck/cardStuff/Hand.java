@@ -19,6 +19,7 @@ public class Hand {
     private LinkedList<CardView> mHand = new LinkedList<>();
     private RelativeLayout mHandLayout;
     public boolean isHidden = false;
+    private final int maxScreenWidth;
 
     public Hand(Context context) {
         mContext = context;
@@ -29,6 +30,7 @@ public class Hand {
         );
         rlp.setMargins(0, 30, 0, 0); // Left, Top, Right, Bottom
         mHandLayout.setLayoutParams(rlp);
+        maxScreenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
 
     }
 
@@ -39,11 +41,19 @@ public class Hand {
             cardParams.addRule(RelativeLayout.RIGHT_OF, mHand.peekLast().getID());
         }
         mHand.add(card);
+        testMoveCards();
         mHandLayout.addView(card);
         card.flipCard();
         mCardsInHand++;
     }
 
+    // Temporary method by which to dynamically resize where the cards in the hand are placed.
+    public void testMoveCards() {
+        for (CardView card : mHand) {
+            RelativeLayout.LayoutParams cardParams = (RelativeLayout.LayoutParams) card.getLayoutParams();
+            cardParams.setMargins(0, 0, mCardsInHand * -20, 0);
+        }
+    }
     // Returns the first occurance of the given card from the hand while also removing it from the hand
     public CardView pullFromHand(CardView card) {
         mHand.removeFirstOccurrence(card);
