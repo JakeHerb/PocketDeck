@@ -111,7 +111,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
                     return true;
                 case 3:
                     Log.d(DEBUG_TAG, "down");
-                    if (!mHand.isHidden) {
+                    if (!mHand.isHidden && mHand.getmCardsInHand() > 0) {
                         mHand.hideBelowScreen();
                     }
                     return true;

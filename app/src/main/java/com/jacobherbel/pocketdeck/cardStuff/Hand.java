@@ -71,4 +71,8 @@ public class Hand {
     public RelativeLayout getmHandLayout() {
         return mHandLayout;
     }
+
+    public int getmCardsInHand() {
+        return mCardsInHand;
+    }
 }
