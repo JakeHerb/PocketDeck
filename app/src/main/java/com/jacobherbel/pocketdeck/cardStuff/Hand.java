@@ -18,6 +18,7 @@ public class Hand {
     private int mCardsInHand = 0;
     private LinkedList<CardView> mHand = new LinkedList<>();
     private RelativeLayout mHandLayout;
+    public boolean isHidden = false;
 
     public Hand(Context context) {
         mContext = context;
@@ -48,6 +49,18 @@ public class Hand {
         mHand.removeFirstOccurrence(card);
         mCardsInHand--;
         return card;
+    }
+
+    // Pushes the hand layout below the screen, hiding it.
+    public void hideBelowScreen() {
+        mHandLayout.animate().translationYBy(500).setDuration(100);
+        isHidden = true;
+    }
+
+    // Pulls the hand layout back to its original position
+    public void bringBackToScreen() {
+        mHandLayout.animate().translationYBy(-500).setDuration(100);
+        isHidden = false;
     }
 
     // Returns, but does not remove, the most recently added CardView
