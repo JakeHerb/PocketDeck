@@ -4,7 +4,9 @@ Current TODO's are:
 
 [X] Create a dynamic player hand
 
-[ ] Add animation to player hand, allowing as many cards as the user wants, and ability to hide the hand
+[X] Add animation to player hand, allowing as many cards as the user wants, and ability to hide the hand
+
+[ ] Improve hand animations that change depending on the users device.
 
 [ ] Get rid of buttons, allowing the user to place cards by interacting with the deck
 
