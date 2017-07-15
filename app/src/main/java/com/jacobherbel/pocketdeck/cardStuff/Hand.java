@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.Layout;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -25,8 +26,9 @@ public class Hand {
     private final int mRoomForHand;
     private final int mCardWidth;
     private int mMinCardShowing;
-    public int mMaxOverlap;
-    public int mMostCardsVisible;
+    private int mMaxOverlap;
+    private int mMostCardsVisible;
+    private CardView mSelectedCard;
 
     public Hand(Context context) {
         mContext = context;
@@ -44,28 +46,29 @@ public class Hand {
         mHandLayout.setLayoutParams(rlp);
     }
 
-    // Add a card to the end of the linkedlist
+    // Add a card to the end of the hand without any specific information or animation
     public void add(CardView card) {
-        RelativeLayout.LayoutParams cardParams = (RelativeLayout.LayoutParams) card.getLayoutParams();
         mHand.add(card);
-        testMoveCards();
         mHandLayout.addView(card);
+        arrangeCards();
         card.flipCard();
         mCardsInHand++;
     }
 
-    // Temporary method by which to dynamically resize where the cards in the hand are placed.
-    public void testMoveCards() {
+
+    // Dynamically resizes where the cards in the hand are placed.
+    public void arrangeCards() {
         float prevCard = mHandLayout.getX();
         for (CardView card : mHand) {
-            RelativeLayout.LayoutParams cardParams = (RelativeLayout.LayoutParams) card.getLayoutParams();
             if (card == mHand.peekFirst()) {
                 card.setReturnPositionX(card.getX());
+                card.setReturnPositionY(card.getY());
                 prevCard = card.getX();
             }
             else {
                 card.setX(prevCard + calcSpaceBetweenCards());
                 card.setReturnPositionX(card.getX());
+                card.setReturnPositionY(mHand.peekFirst().getReturnPositionY());
                 prevCard = card.getX();
             }
         }
@@ -79,13 +82,22 @@ public class Hand {
 
     // Pushes the hand layout below the screen, hiding it.
     public void hideBelowScreen() {
-        mHandLayout.animate().translationYBy(500).setDuration(100);
+        int screenCenter = mContext.getResources().getDisplayMetrics().widthPixels / 2;
+        for (CardView card : mHand) {
+            card.animate().translationX(screenCenter - (mCardWidth / 2))
+                    .translationYBy(550)
+                    .setDuration(200);
+        }
         isHidden = true;
     }
 
     // Pulls the hand layout back to its original position
     public void bringBackToScreen() {
-        mHandLayout.animate().translationYBy(-500).setDuration(100);
+        for (CardView card : mHand) {
+            card.animate().translationX(card.getReturnPositionX())
+                    .translationYBy(-550)
+                    .setDuration(200);
+        }
         isHidden = false;
     }
 

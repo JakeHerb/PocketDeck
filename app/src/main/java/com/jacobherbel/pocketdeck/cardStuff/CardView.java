@@ -120,6 +120,8 @@ public class CardView extends ImageView {
     // Returns the resource ID
     public int getID() {return this.getId();}
 
+    public boolean isRevealed() {return mRevealed;}
+
     public void setReturnPositionX(float x) {mReturnPositionX = x;}
 
     public void setReturnPositionY(float y ) {mReturnPositionY = y;}
