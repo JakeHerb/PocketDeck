@@ -45,6 +45,8 @@ public class SingleDeviceActivity extends AppCompatActivity {
         LinearLayout wholeScreen = (LinearLayout) findViewById(R.id.singleDeviceActivityLayout);
         wholeScreen.addView(mHand.getmHandLayout());
         mDetector = new GestureDetectorCompat(this, new MyGestureListener());
+        Button cutBtn = (Button) findViewById(R.id.cutDeckBtn);
+        cutBtn.setText("" + mHand.mMaxOverlap);
     }
 
 
@@ -57,7 +59,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
             topCard.flipCard();
             keepbtn.setText("Keep card");
         } else if (keepbtn.getText().equals("Keep card")) {
-            addToHand(mCardDeck.nextView());
+            addToHand(mCardDeck.pollView());
             topCard.flipCard();
             keepbtn.setText("Grab a new card");
         } else {
@@ -87,6 +89,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
+    // Custom gesture listener that detects the direction the user swipes
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
         private static final String DEBUG_TAG = "Gestures";
 

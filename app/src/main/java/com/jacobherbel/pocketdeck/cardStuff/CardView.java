@@ -17,8 +17,10 @@ import java.util.jar.Attributes;
  */
 public class CardView extends ImageView {
 
-    Card mCard;
-    boolean mRevealed;
+    private Card mCard;
+    private boolean mRevealed;
+    private float mReturnPositionX;
+    private float mReturnPositionY;
     public CardView(Context context) {
         super(context);
         init(context);
@@ -116,7 +118,13 @@ public class CardView extends ImageView {
     }
 
     // Returns the resource ID
-    public int getID() {
-        return this.getId();
-    }
+    public int getID() {return this.getId();}
+
+    public void setReturnPositionX(float x) {mReturnPositionX = x;}
+
+    public void setReturnPositionY(float y ) {mReturnPositionY = y;}
+
+    public float getReturnPositionX() {return mReturnPositionX;}
+
+    public float getReturnPositionY() {return mReturnPositionY;}
 }

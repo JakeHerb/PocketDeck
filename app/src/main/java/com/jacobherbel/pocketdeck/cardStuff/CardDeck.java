@@ -59,7 +59,7 @@ public class CardDeck {
     }
 
     // Returns the first added CardView, while also removing it
-    public CardView nextView() {
+    public CardView pollView() {
         --mCardsInDeck;
         return mDeck.poll();
     }
