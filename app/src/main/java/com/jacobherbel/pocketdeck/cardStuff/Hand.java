@@ -69,19 +69,39 @@ public class Hand {
         float prevCard = 0f;
         for (CardView card : mHand) {
             if (card == mHand.peekFirst()) {
-                card.setX(((spaceAvailable() + mCardWidth) / 2));
-                card.setReturnPositionX(card.getX());
-                card.setReturnPositionY(card.getY());
-                prevCard = card.getX();
+                card.setX((spaceAvailable() + mCardWidth) / 2);
             }
             else {
                 card.setX(prevCard + calcSpaceBetweenCards());
-                card.setReturnPositionX(card.getX());
-                card.setReturnPositionY(mHand.peekFirst().getReturnPositionY());
-                prevCard = card.getX();
             }
+            card.setReturnPositionX(card.getX());
+            card.setReturnPositionY(mHand.peekFirst().getReturnPositionY());
+            prevCard = card.getX();
+        }
+        angleCards();
+        moveDown();
+    }
+
+    // Tilts the cards with increasingly steep angles, the further away from the center they are
+    public void angleCards() {
+        int halfHand = mCardsInHand / 2;
+        for (int i = 0, degreeTotal = halfHand * 3; i < halfHand; i++, degreeTotal -= 3) {
+            mHand.get(i).setRotation(-degreeTotal);
+            mHand.get(mCardsInHand - (1 + i)).setRotation(degreeTotal);
+        }
+        if (mCardsInHand % 2 != 0) {
+            mHand.get(halfHand).setRotation(0);
         }
     }
+
+    // Uses the angle of the card to determine how much the card should be moved down.
+    public void moveDown() {
+        for (CardView card : mHand) {
+            double moveDownAmount = card.getReturnPositionY() + ((mCardWidth / 2) * Math.sin(Math.toRadians(card.getRotation())));
+            card.setY((float) Math.abs(moveDownAmount * 2));
+        }
+    }
+
     // Returns the first occurance of the given card from the hand while also removing it from the hand
     public CardView pullFromHand(CardView card) {
         mHand.removeFirstOccurrence(card);
@@ -94,7 +114,7 @@ public class Hand {
         int screenCenter = mContext.getResources().getDisplayMetrics().widthPixels / 2;
         for (CardView card : mHand) {
             card.animate().translationX(screenCenter - (mCardWidth / 2))
-                    .translationYBy(550)
+                    .translationY(card.getReturnPositionY() + 550)
                     .setDuration(200);
         }
         isHidden = true;
@@ -104,7 +124,7 @@ public class Hand {
     public void bringBackToScreen() {
         for (CardView card : mHand) {
             card.animate().translationX(card.getReturnPositionX())
-                    .translationYBy(-550)
+                    .translationY(card.getReturnPositionY())
                     .setDuration(200);
         }
         isHidden = false;
