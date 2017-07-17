@@ -2,11 +2,13 @@ package com.jacobherbel.pocketdeck.cardStuff;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jacobherbel.pocketdeck.R;
@@ -25,6 +27,7 @@ public class Hand {
     public boolean isHidden = false;
     private final int mRoomForHand;
     private final int mCardWidth;
+    private static final float SCALE_FACTOR = 1f;
     private int mMinCardShowing;
     private int mMaxOverlap;
     private int mMostCardsVisible;
@@ -32,11 +35,6 @@ public class Hand {
 
     public Hand(Context context) {
         mContext = context;
-        mCardWidth = ContextCompat.getDrawable(mContext, R.drawable.back).getIntrinsicWidth();
-        mRoomForHand = mContext.getResources().getDisplayMetrics().widthPixels - (mCardWidth / 2);
-        mMinCardShowing = mCardWidth / 6;
-        mMaxOverlap = mCardWidth - mMinCardShowing;
-        mMostCardsVisible = (mRoomForHand - mCardWidth) / mMinCardShowing - 1;
         mHandLayout = new RelativeLayout(mContext);
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -44,23 +42,34 @@ public class Hand {
         );
         rlp.setMargins(0, 30, 0, 0); // Left, Top, Right, Bottom
         mHandLayout.setLayoutParams(rlp);
+        mCardWidth = Math.round(ContextCompat.getDrawable(mContext, R.drawable.back).getIntrinsicWidth() * SCALE_FACTOR);
+        mRoomForHand = mContext.getResources().getDisplayMetrics().widthPixels - Math.round(mCardWidth + mCardWidth / 2);
+        mMinCardShowing = mCardWidth / 6;
+        mMaxOverlap = mCardWidth - mMinCardShowing;
+        mMostCardsVisible = (mRoomForHand) / mMinCardShowing;
     }
 
     // Add a card to the end of the hand without any specific information or animation
     public void add(CardView card) {
+        rescale(SCALE_FACTOR, card);
         mHand.add(card);
         mHandLayout.addView(card);
+        mCardsInHand++;
         arrangeCards();
         card.flipCard();
-        mCardsInHand++;
     }
 
+    public void rescale(float scaleFactor, CardView card) {
+        card.setScaleX(scaleFactor);
+        card.setScaleY(scaleFactor);
+    }
 
     // Dynamically resizes where the cards in the hand are placed.
     public void arrangeCards() {
-        float prevCard = mHandLayout.getX();
+        float prevCard = 0f;
         for (CardView card : mHand) {
             if (card == mHand.peekFirst()) {
+                card.setX(((spaceAvailable() + mCardWidth) / 2));
                 card.setReturnPositionX(card.getX());
                 card.setReturnPositionY(card.getY());
                 prevCard = card.getX();
@@ -101,16 +110,16 @@ public class Hand {
         isHidden = false;
     }
 
-    // Returns the amount of space each card should show, depending on number of cards in the hand
+    // Returns the amount of each card that should show, depending on number of cards in the hand
     public int calcSpaceBetweenCards() {
-        if (mCardsInHand >= mMostCardsVisible) {
+        if ((mRoomForHand / mCardsInHand) < mMinCardShowing) {
             return mMinCardShowing;
         } else if (mCardsInHand == 0) {
             return 0;
-        } else if ((mCardsInHand + 1) * mCardWidth <= mRoomForHand) {
+        } else if (mCardsInHand * mCardWidth <= mRoomForHand) {
             return mCardWidth;
         } else {
-            return (mRoomForHand - mCardWidth) / mCardsInHand;
+            return mRoomForHand / mCardsInHand;
         }
 
     }
@@ -118,8 +127,8 @@ public class Hand {
     // Returns the amount of screen space taken up by the cards in the hand
     public int spaceOccupied() {
         if (mCardsInHand >= mMostCardsVisible) {
-            return mRoomForHand;
-        } else if (mCardsInHand == 1) {
+            return mRoomForHand + mCardWidth;
+        } else if (mCardsInHand == 0) {
             return mCardWidth;
         } else {
             return calcSpaceBetweenCards() * (mCardsInHand - 1) + mCardWidth;
