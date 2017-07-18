@@ -76,7 +76,9 @@ public class Hand {
             prevCard = card.getX();
         }
         angleCards();
-        setVerticalDisplacement();
+        for (CardView card : mHand) {
+            card.setY(setVerticalDisplacement(card) + card.getReturnPositionY());
+        }
     }
 
     // Tilts the cards with increasingly steep angles, the further away from the center they are
@@ -92,12 +94,9 @@ public class Hand {
     }
 
     // Uses the angle of the card to determine how much the card should be moved down.
-    public void setVerticalDisplacement() {
-        for (CardView card : mHand) {
-            double moveDownAmount = card.getReturnPositionY() + ((mCardWidth / 2) * Math.sin(Math.toRadians(card.getRotation())));
-            card.animate().translationY((float) Math.abs(moveDownAmount * 2))
-                    .setDuration(0);
-        }
+    public float setVerticalDisplacement(CardView card) {
+        double moveDownAmount = Math.abs(((mCardWidth / 2) * Math.sin(Math.toRadians(card.getRotation()))));
+        return (float) moveDownAmount * 2;
     }
 
     // Returns the first occurance of the given card from the hand while also removing it from the hand
@@ -124,7 +123,7 @@ public class Hand {
     public void bringBackToScreen() {
         for (CardView card : mHand) {
             card.animate().translationX(card.getReturnPositionX())
-                    .translationY(card.getReturnPositionY())
+                    .translationY(card.getReturnPositionY() + setVerticalDisplacement(card))
                     .setDuration(200);
         }
         isHidden = false;
