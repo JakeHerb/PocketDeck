@@ -141,7 +141,4 @@ public class SingleDeviceActivity extends AppCompatActivity {
             return 0;
         }
     }
-
-
-
 }

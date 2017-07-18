@@ -1,8 +1,12 @@
 package com.jacobherbel.pocketdeck.cardStuff;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import com.jacobherbel.pocketdeck.R;
+import com.jacobherbel.pocketdeck.SingleDeviceActivity;
+import com.jacobherbel.pocketdeck.customListeners.DefaultCardListener;
+
 import java.util.LinkedList;
 
 /**
@@ -44,7 +48,9 @@ public class Hand {
     public void add(CardView card) {
         rescale(SCALE_FACTOR, card);
         mHand.add(card);
+        card.setIsInHand(true);
         mHandLayout.addView(card);
+        card.setOnTouchListener(new DefaultCardListener((RelativeLayout) mHandLayout.getParent(), this));
         mCardsInHand++;
         arrangeCards();
         card.flipCard();
@@ -96,6 +102,8 @@ public class Hand {
 
     // Returns the first occurance of the given card from the hand while also removing it from the hand
     public CardView pullFromHand(CardView card) {
+        card.setIsInHand(false);
+        mHandLayout.removeView(card);
         mHand.removeFirstOccurrence(card);
         mCardsInHand--;
         return card;
