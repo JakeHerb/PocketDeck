@@ -13,22 +13,14 @@
     android:clipToPadding="false"
     tools:context="com.jacobherbel.pocketdeck.SingleDeviceActivity">
 
-    <RelativeLayout
-        android:id="@+id/deckLayout"
-        android:layout_width="fill_parent"
+    <com.jacobherbel.pocketdeck.cardStuff.CardView
+        android:id="@+id/deckPlacementSpot"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/back" />
 
-        <com.jacobherbel.pocketdeck.cardStuff.CardView
-            android:id="@+id/deckPlacementSpot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/back" />
-
-
-    </RelativeLayout>
 
     <com.jacobherbel.pocketdeck.cardStuff.CardView
         android:id="@+id/card1"

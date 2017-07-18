@@ -5,6 +5,9 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
@@ -21,6 +24,8 @@ public class CardView extends ImageView {
     private boolean mRevealed;
     private float mReturnPositionX;
     private float mReturnPositionY;
+    private float lastTouchX;
+    private float lastTouchY;
     public CardView(Context context) {
         super(context);
         init(context);
@@ -52,6 +57,7 @@ public class CardView extends ImageView {
         Resources res = this.getResources();
         mRevealed = false;
         this.setImageResource(R.drawable.back);
+        this.setOnTouchListener(cardInHandListener);
     }
 
 
@@ -116,6 +122,46 @@ public class CardView extends ImageView {
             horizontalReveal();
         }
     }
+
+    public View.OnTouchListener cardInHandListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    Log.i("TAG", "touched down");
+                    final float x = event.getRawX();
+                    final float y = event.getRawY();
+
+                    // Remember where we started
+                    lastTouchX = x;
+                    lastTouchY = y;
+                    break;
+                }
+
+                case MotionEvent.ACTION_MOVE: {
+                    final float x = event.getRawX();
+                    final float y = event.getRawY();
+
+                    final float dX = x - lastTouchX;
+                    final float dY = y - lastTouchY;
+                    Log.i("TAG", "moving: (" + dX + ", " + dY + ")");
+                    v.animate().translationXBy(dX)
+                            .translationYBy(dY)
+                            .setDuration(0);
+                    lastTouchX = x;
+                    lastTouchY = y;
+                    break;
+                }
+                case MotionEvent.ACTION_UP: {
+                    Log.i("TAG", "touched up");
+                    break;
+                }
+            }
+
+            return true;
+        }
+    };
 
     // Returns the resource ID
     public int getID() {return this.getId();}

@@ -1,18 +1,8 @@
 package com.jacobherbel.pocketdeck.cardStuff;
-
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.text.Layout;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.jacobherbel.pocketdeck.R;
-
 import java.util.LinkedList;
 
 /**
@@ -31,7 +21,6 @@ public class Hand {
     private int mMinCardShowing;
     private int mMaxOverlap;
     private int mMostCardsVisible;
-    private CardView mSelectedCard;
 
     public Hand(Context context) {
         mContext = context;
