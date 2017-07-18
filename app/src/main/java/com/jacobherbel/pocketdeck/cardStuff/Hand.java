@@ -26,7 +26,7 @@ public class Hand {
         mContext = context;
         mHandLayout = new RelativeLayout(mContext);
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
         rlp.setMargins(0, 30, 0, 0); // Left, Top, Right, Bottom
@@ -64,9 +64,6 @@ public class Hand {
             }
             else {
                 card.setX(prevCard + calcSpaceBetweenCards());
-                if (isHidden) {
-                    card.setY(mHand.peekFirst().getY());
-                }
             }
             card.setReturnPositionX(card.getX());
             card.setReturnPositionY(mHand.peekFirst().getReturnPositionY());
@@ -92,7 +89,8 @@ public class Hand {
     public void setVerticalDisplacement() {
         for (CardView card : mHand) {
             double moveDownAmount = card.getReturnPositionY() + ((mCardWidth / 2) * Math.sin(Math.toRadians(card.getRotation())));
-            card.setY((float) Math.abs(moveDownAmount * 2));
+            card.animate().translationY((float) Math.abs(moveDownAmount * 2))
+                    .setDuration(0);
         }
     }
 
