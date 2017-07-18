@@ -30,6 +30,8 @@ public class Hand {
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
         rlp.setMargins(0, 30, 0, 0); // Left, Top, Right, Bottom
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        rlp.bottomMargin = mContext.getResources().getDisplayMetrics().heightPixels / 12;
         mHandLayout.setLayoutParams(rlp);
         mCardWidth = Math.round(ContextCompat.getDrawable(mContext, R.drawable.back).getIntrinsicWidth() * SCALE_FACTOR);
         mRoomForHand = mContext.getResources().getDisplayMetrics().widthPixels - Math.round(mCardWidth + mCardWidth / 2);
@@ -62,13 +64,16 @@ public class Hand {
             }
             else {
                 card.setX(prevCard + calcSpaceBetweenCards());
+                if (isHidden) {
+                    card.setY(mHand.peekFirst().getY());
+                }
             }
             card.setReturnPositionX(card.getX());
             card.setReturnPositionY(mHand.peekFirst().getReturnPositionY());
             prevCard = card.getX();
         }
         angleCards();
-        moveDown();
+        setVerticalDisplacement();
     }
 
     // Tilts the cards with increasingly steep angles, the further away from the center they are
@@ -84,7 +89,7 @@ public class Hand {
     }
 
     // Uses the angle of the card to determine how much the card should be moved down.
-    public void moveDown() {
+    public void setVerticalDisplacement() {
         for (CardView card : mHand) {
             double moveDownAmount = card.getReturnPositionY() + ((mCardWidth / 2) * Math.sin(Math.toRadians(card.getRotation())));
             card.setY((float) Math.abs(moveDownAmount * 2));

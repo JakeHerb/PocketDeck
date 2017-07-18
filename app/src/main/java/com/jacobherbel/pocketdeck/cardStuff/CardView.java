@@ -130,6 +130,7 @@ public class CardView extends ImageView {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN: {
                     Log.i("TAG", "touched down");
+                    v.bringToFront();
                     final float x = event.getRawX();
                     final float y = event.getRawY();
 

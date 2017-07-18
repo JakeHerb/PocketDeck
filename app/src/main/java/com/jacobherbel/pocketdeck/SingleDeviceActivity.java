@@ -43,7 +43,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
         mCardDeck = new CardDeck(mContext);
         mHand = new Hand(mContext);
         mCardDeck.fillDeck();
-        LinearLayout wholeScreen = (LinearLayout) findViewById(R.id.singleDeviceActivityLayout);
+        RelativeLayout wholeScreen = (RelativeLayout) findViewById(R.id.singleDeviceActivityLayout);
         wholeScreen.addView(mHand.getmHandLayout());
         mDetector = new GestureDetectorCompat(this, new MyGestureListener());
     }
