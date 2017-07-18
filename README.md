@@ -6,9 +6,11 @@ Current TODO's are:
 
 [X] Add animation to player hand, allowing as many cards as the user wants, and ability to hide the hand
 
-[ ] Improve hand animations that change depending on the users device.
+[X] Improve hand animations that change depending on the users device.
 
-[ ] Get rid of buttons, allowing the user to place cards by interacting with the deck
+[ ] Add ability to detect users touching specific cards, and react accordingly
+
+[ ] Get rid of buttons
 
 [ ] Allow user to place cards on their "table"
 
