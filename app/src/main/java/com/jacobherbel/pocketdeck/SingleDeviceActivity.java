@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -33,6 +34,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
     private Random rn = new Random(System.currentTimeMillis());
     private ViewUtils mUtils = new ViewUtils();
     private GestureDetectorCompat mDetector;
+    private int offsetY;
 
 
     @Override
@@ -68,6 +70,7 @@ public class SingleDeviceActivity extends AppCompatActivity {
 
     public void addToHand(CardView cardView) {
         mHand.add(cardView);
+        Button cutButton = (Button) findViewById(R.id.cutDeckBtn);
     }
 
     // Cuts the deck between 1/4 of its size, and 3/4 of its size

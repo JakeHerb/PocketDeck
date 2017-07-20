@@ -33,7 +33,6 @@ public class Hand {
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
-        rlp.setMargins(0, 30, 0, 0); // Left, Top, Right, Bottom
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         rlp.bottomMargin = mContext.getResources().getDisplayMetrics().heightPixels / 12;
         mHandLayout.setLayoutParams(rlp);
@@ -163,6 +162,8 @@ public class Hand {
     public CardView peekLast() {
         return mHand.peekLast();
     }
+
+    public Context getContext() { return mContext;}
 
     public RelativeLayout getmHandLayout() {
         return mHandLayout;

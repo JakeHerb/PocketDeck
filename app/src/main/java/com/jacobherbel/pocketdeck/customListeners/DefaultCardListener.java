@@ -1,5 +1,6 @@
 package com.jacobherbel.pocketdeck.customListeners;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,8 @@ public class DefaultCardListener implements View.OnTouchListener{
             case MotionEvent.ACTION_DOWN: {
                 Log.i("TAG", "touched down");
                 v.bringToFront();
+                int[] viewLocation = new int[2];
+                v.getLocationInWindow(viewLocation);
 
                 // When moving from one layout to another, the Y value gets weird, so for now I have to set
                 // the Y value as just the raw input data.
@@ -39,7 +42,7 @@ public class DefaultCardListener implements View.OnTouchListener{
                     hand.pullFromHand(v);
                     hand.arrangeCards();
                     v.setRotation(0);
-                    v.setY(event.getRawY()); // TODO figure out a way to make this smoother
+                    v.setY(viewLocation[1]); // TODO figure out a way to make this smoother
                 }
                 final float x = event.getRawX();
                 final float y = event.getRawY();
