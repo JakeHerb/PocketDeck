@@ -4,9 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.view.View;
 import android.widget.RelativeLayout;
-
-import com.jacobherbel.pocketdeck.cardStuff.Card;
-
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;

@@ -1,13 +1,9 @@
 package com.jacobherbel.pocketdeck.customListeners;
 
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-
-import com.jacobherbel.pocketdeck.R;
 import com.jacobherbel.pocketdeck.cardStuff.CardView;
 import com.jacobherbel.pocketdeck.cardStuff.Hand;
 

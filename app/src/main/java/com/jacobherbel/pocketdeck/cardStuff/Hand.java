@@ -1,12 +1,9 @@
 package com.jacobherbel.pocketdeck.cardStuff;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import com.jacobherbel.pocketdeck.R;
-import com.jacobherbel.pocketdeck.SingleDeviceActivity;
 import com.jacobherbel.pocketdeck.customListeners.DefaultCardListener;
-
 import java.util.LinkedList;
 
 /**

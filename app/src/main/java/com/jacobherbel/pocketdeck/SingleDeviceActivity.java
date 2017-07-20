@@ -12,19 +12,12 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import com.jacobherbel.pocketdeck.cardStuff.Card;
 import com.jacobherbel.pocketdeck.cardStuff.CardDeck;
 import com.jacobherbel.pocketdeck.cardStuff.CardView;
 import com.jacobherbel.pocketdeck.cardStuff.Hand;
-
-import java.util.Iterator;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class SingleDeviceActivity extends AppCompatActivity {
 
@@ -34,7 +27,6 @@ public class SingleDeviceActivity extends AppCompatActivity {
     private Random rn = new Random(System.currentTimeMillis());
     private ViewUtils mUtils = new ViewUtils();
     private GestureDetectorCompat mDetector;
-    private int offsetY;
 
 
     @Override
