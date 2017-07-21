@@ -40,33 +40,14 @@ public class CardDeck {
 
     public void arrange() {
         int movementAmount = 10;
-        if (mCardsInDeck >= 4) {
-            CardView card = (CardView) mDeck.get(mCardsInDeck - 4);
-            card.setX(xLocation + (movementAmount * 3));
-            card.setY(yLocation - (movementAmount * 3));
-            card.setReturnPositionX(card.getX());
-            card.setReturnPositionY(card.getY());
-        }
-        if (mCardsInDeck >= 3) {
-            CardView card = (CardView) mDeck.get(mCardsInDeck - 3);
-            card.setX(xLocation + (movementAmount * 2));
-            card.setY(yLocation - (movementAmount * 2));
-            card.setReturnPositionX(card.getX());
-            card.setReturnPositionY(card.getY());
-        }
-        if (mCardsInDeck >= 2) {
-            CardView card = (CardView) mDeck.get(mCardsInDeck - 2);
-            card.setX(xLocation + (movementAmount));
-            card.setY(yLocation - (movementAmount));
-            card.setReturnPositionX(card.getX());
-            card.setReturnPositionY(card.getY());
-        }
-        if (mCardsInDeck >= 1) {
-            CardView card = (CardView) mDeck.get(mCardsInDeck - 1);
-            card.setX(xLocation);
-            card.setY(yLocation);
-            card.setReturnPositionX(card.getX());
-            card.setReturnPositionY(card.getY());
+        for (int i = 1; i < 5; i++) {
+            if (mCardsInDeck >= i) {
+                CardView card = (CardView) mDeck.get(mCardsInDeck - i);
+                card.setX(xLocation + (movementAmount * (4 - i)));
+                card.setY(yLocation - (movementAmount * (4 - i)));
+                card.setReturnPositionX(card.getX());
+                card.setReturnPositionY(card.getY());
+            }
         }
     }
 
