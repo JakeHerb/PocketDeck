@@ -33,13 +33,16 @@ public class SingleDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_device);
-        mContext = this;
-        mCardDeck = new CardDeck(mContext);
-        mHand = new Hand(mContext);
-        mCardDeck.fillDeck();
         RelativeLayout wholeScreen = (RelativeLayout) findViewById(R.id.singleDeviceActivityLayout);
+        mContext = this;
+        mCardDeck = new CardDeck(mContext, wholeScreen);
+        mHand = new Hand(mContext);
         wholeScreen.addView(mHand.getmHandLayout());
         mDetector = new GestureDetectorCompat(this, new MyGestureListener());
+        CardView deckSpot = (CardView) findViewById(R.id.deckPlacementSpot);
+        mCardDeck.place(deckSpot.getX(), deckSpot.getY());
+        //wholeScreen.removeView(deckSpot);
+
     }
 
 
@@ -48,11 +51,11 @@ public class SingleDeviceActivity extends AppCompatActivity {
         Button keepbtn = (Button) findViewById(R.id.newCardBtn);
         CardView topCard = (CardView) findViewById(R.id.card1);
         if (keepbtn.getText().equals("Grab a new card")) {
-            topCard.setCard(mCardDeck.peek().getCard());
+            topCard.setCard(mCardDeck.peekLast().getCard());
             topCard.flipCard();
             keepbtn.setText("Keep card");
         } else if (keepbtn.getText().equals("Keep card")) {
-            addToHand(mCardDeck.pollView());
+            addToHand(mCardDeck.grabTopCard());
             topCard.flipCard();
             keepbtn.setText("Grab a new card");
         } else {

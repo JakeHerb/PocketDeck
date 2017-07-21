@@ -10,11 +10,11 @@ import com.jacobherbel.pocketdeck.cardStuff.Hand;
 /**
  * Created by jacobherbel on 7/18/17.
  */
-public class DefaultCardListener implements View.OnTouchListener{
+public class CardInHandListener implements View.OnTouchListener{
 
     private ViewGroup root;
     private Hand hand;
-    public DefaultCardListener(ViewGroup root, Hand hand) {
+    public CardInHandListener(ViewGroup root, Hand hand) {
         this.root = root;
         this.hand = hand;
     }
@@ -40,6 +40,7 @@ public class DefaultCardListener implements View.OnTouchListener{
                     v.setRotation(0);
                     v.setY(viewLocation[1]); // TODO figure out a way to make this smoother
                 }
+                v.setRotation(0);
                 final float x = event.getRawX();
                 final float y = event.getRawY();
 

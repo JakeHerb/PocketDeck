@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import com.jacobherbel.pocketdeck.R;
-import com.jacobherbel.pocketdeck.customListeners.DefaultCardListener;
 
 
 /**

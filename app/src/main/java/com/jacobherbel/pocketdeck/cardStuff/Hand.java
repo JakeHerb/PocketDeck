@@ -3,7 +3,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.widget.RelativeLayout;
 import com.jacobherbel.pocketdeck.R;
-import com.jacobherbel.pocketdeck.customListeners.DefaultCardListener;
+import com.jacobherbel.pocketdeck.customListeners.CardInHandListener;
 import java.util.LinkedList;
 
 /**
@@ -46,7 +46,7 @@ public class Hand {
         mHand.add(card);
         card.setIsInHand(true);
         mHandLayout.addView(card);
-        card.setOnTouchListener(new DefaultCardListener((RelativeLayout) mHandLayout.getParent(), this));
+        card.setOnTouchListener(new CardInHandListener((RelativeLayout) mHandLayout.getParent(), this));
         mCardsInHand++;
         arrangeCards();
         card.flipCard();
@@ -63,6 +63,8 @@ public class Hand {
         for (CardView card : mHand) {
             if (card == mHand.peekFirst()) {
                 card.setX((spaceAvailable() + mCardWidth) / 2);
+                card.setReturnPositionY(0f);
+                card.setY(card.getReturnPositionY());
             }
             else {
                 card.setX(prevCard + calcSpaceBetweenCards());
