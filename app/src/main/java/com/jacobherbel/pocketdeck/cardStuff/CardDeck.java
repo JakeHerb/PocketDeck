@@ -51,6 +51,25 @@ public class CardDeck {
         }
     }
 
+    public void rearrange() {
+        if (mCardsInDeck >= 4) {
+            mParent.addView(mDeck.get(mCardsInDeck - 4));
+            for (int i = mCardsInDeck - 4; i < mCardsInDeck; i++) {
+                mDeck.get(i).bringToFront();
+            }
+        }
+        int movementAmount = 10;
+        for (int i = 1; i < 5; i++) {
+            if (mCardsInDeck >= i) {
+                CardView card = (CardView) mDeck.get(mCardsInDeck - i);
+                card.animate().translationX(xLocation + (movementAmount * (4 - i)));
+                card.animate().translationY(yLocation - (movementAmount * (4 - i)));
+                card.setReturnPositionX(card.getX());
+                card.setReturnPositionY(card.getY());
+            }
+        }
+    }
+
     // Initializes the deck to have all 52 cards in order
     public void fillDeck() {
         if (mCardsInDeck != 0) {
@@ -97,6 +116,7 @@ public class CardDeck {
     public CardView grabTopCard() {
         --mCardsInDeck;
         mParent.removeView(mDeck.peekLast());
+        rearrange();
         return mDeck.pollLast();
     }
 
