@@ -29,6 +29,7 @@ public class CardDeck {
         fillDeck();
     }
 
+    // Initial placement of the deck at the given x and y values, adding the needed views to the screen
     public void place(float x, float y) {
         xLocation = x;
         yLocation = y;
@@ -38,6 +39,7 @@ public class CardDeck {
         arrange();
     }
 
+    // First time the deck is placed, it sets locations for the visible cards
     public void arrange() {
         int movementAmount = 10;
         for (int i = 1; i < 5; i++) {
@@ -51,21 +53,24 @@ public class CardDeck {
         }
     }
 
+    // Anytime a card is removed from the deck, this method should be ran.
+    // Animates the movement of the cards to simulate taking a card from the top
     public void rearrange() {
         if (mCardsInDeck >= 4) {
             mParent.addView(mDeck.get(mCardsInDeck - 4));
             for (int i = mCardsInDeck - 4; i < mCardsInDeck; i++) {
                 mDeck.get(i).bringToFront();
             }
-        }
-        int movementAmount = 10;
-        for (int i = 1; i < 5; i++) {
-            if (mCardsInDeck >= i) {
-                CardView card = (CardView) mDeck.get(mCardsInDeck - i);
-                card.animate().translationX(xLocation + (movementAmount * (4 - i)));
-                card.animate().translationY(yLocation - (movementAmount * (4 - i)));
-                card.setReturnPositionX(card.getX());
-                card.setReturnPositionY(card.getY());
+
+            int movementAmount = 10;
+            for (int i = 1; i < 5; i++) {
+                if (mCardsInDeck >= i) {
+                    CardView card = (CardView) mDeck.get(mCardsInDeck - i);
+                    card.animate().translationX(xLocation + (movementAmount * (4 - i)));
+                    card.animate().translationY(yLocation - (movementAmount * (4 - i)));
+                    card.setReturnPositionX(card.getX());
+                    card.setReturnPositionY(card.getY());
+                }
             }
         }
     }
