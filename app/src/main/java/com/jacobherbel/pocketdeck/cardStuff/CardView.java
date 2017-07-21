@@ -114,6 +114,13 @@ public class CardView extends ImageView {
         }
     }
 
+    public void resetInfo() {
+        this.setReturnPositionY(0);
+        this.setReturnPositionX(0);
+        this.setX(0);
+        this.setY(0);
+    }
+
 
     // Returns the resource ID
     public int getID() {return this.getId();}

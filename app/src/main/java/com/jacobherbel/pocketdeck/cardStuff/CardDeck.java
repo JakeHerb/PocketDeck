@@ -5,6 +5,10 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import com.jacobherbel.pocketdeck.customListeners.CardInDeckListener;
+import com.jacobherbel.pocketdeck.customListeners.CardInHandListener;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
@@ -18,14 +22,16 @@ public class CardDeck {
     private LinkedList<CardView> mDeck = new LinkedList<>();
     Context mContext;
     private ViewGroup mParent;
+    private Hand mHand;
     private int mCardsInDeck = 0;
     private float xLocation;
     private float yLocation;
     Random rn = new Random(System.currentTimeMillis());
 
-    public CardDeck(Context context, ViewGroup parent) {
+    public CardDeck(Context context, ViewGroup parent, Hand hand) {
         this.mContext = context;
         mParent = parent;
+        mHand = hand;
         fillDeck();
     }
 
@@ -37,6 +43,7 @@ public class CardDeck {
             mParent.addView(mDeck.get(i));
         }
         arrange();
+        mDeck.getLast().setOnTouchListener(new CardInDeckListener(mContext, mParent, mHand, this));
     }
 
     // First time the deck is placed, it sets locations for the visible cards
@@ -69,10 +76,11 @@ public class CardDeck {
                     card.animate().translationX(xLocation + (movementAmount * (4 - i)));
                     card.animate().translationY(yLocation - (movementAmount * (4 - i)));
                     card.setReturnPositionX(card.getX());
-                    card.setReturnPositionY(card.getY());
+                    card.setReturnPositionY(card.getX());
                 }
             }
         }
+        mDeck.getLast().setOnTouchListener(new CardInDeckListener(mContext, mParent, mHand, this));
     }
 
     // Initializes the deck to have all 52 cards in order
@@ -121,7 +129,6 @@ public class CardDeck {
     public CardView grabTopCard() {
         --mCardsInDeck;
         mParent.removeView(mDeck.peekLast());
-        rearrange();
         return mDeck.pollLast();
     }
 

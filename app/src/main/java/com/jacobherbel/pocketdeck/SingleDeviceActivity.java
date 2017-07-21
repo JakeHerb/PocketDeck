@@ -35,8 +35,8 @@ public class SingleDeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_device);
         RelativeLayout wholeScreen = (RelativeLayout) findViewById(R.id.singleDeviceActivityLayout);
         mContext = this;
-        mCardDeck = new CardDeck(mContext, wholeScreen);
         mHand = new Hand(mContext);
+        mCardDeck = new CardDeck(mContext, wholeScreen, mHand);
         wholeScreen.addView(mHand.getmHandLayout());
         mDetector = new GestureDetectorCompat(this, new MyGestureListener());
         CardView deckSpot = (CardView) findViewById(R.id.deckPlacementSpot);
@@ -65,7 +65,6 @@ public class SingleDeviceActivity extends AppCompatActivity {
 
     public void addToHand(CardView cardView) {
         mHand.add(cardView);
-        Button cutButton = (Button) findViewById(R.id.cutDeckBtn);
     }
 
     // Cuts the deck between 1/4 of its size, and 3/4 of its size
@@ -139,4 +138,6 @@ public class SingleDeviceActivity extends AppCompatActivity {
             return 0;
         }
     }
+
+    public Hand getHand() {return mHand;}
 }
