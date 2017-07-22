@@ -16,7 +16,9 @@ Current TODO's are:
 
 [X] Allow user to place cards on their "table"
 
-[ ] Create CardOnTableListener() that allows users to add cards back to the hand, flip cards over, or "burn" cards
+[X] Create CardOnTableListener() that allows users to add cards back to the hand, flip cards over, or "burn" cards
+
+[ ] Create ability to place cards into a specific location in the hand, moving the cards around dynamically
 
 [ ] Add sounds
 
