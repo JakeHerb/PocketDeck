@@ -64,9 +64,8 @@ public class CardInDeckListener implements View.OnTouchListener {
             case MotionEvent.ACTION_UP: {
                 Log.i("TAG", "touched up");
                 if (event.getRawY() > 1750) { // TODO get rid of this magic number
-                    ViewGroup parent = (ViewGroup) v.getParent();
-                    parent.removeView(v);
-                    mHand.add(mDeck.grabTopCard());
+                    CardView card = mDeck.grabTopCard();
+                    mHand.add(card);
                     mDeck.rearrange();
                     Log.i("TAG", "put in hand");
                 } else {
@@ -75,12 +74,11 @@ public class CardInDeckListener implements View.OnTouchListener {
                             .setDuration(100);
                     Log.i("TAG", "teleport back");
                 }
-
-
                 break;
             }
         }
 
         return true;
     }
+
 }
