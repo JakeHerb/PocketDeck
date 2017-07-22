@@ -72,11 +72,12 @@ public class CardDeck {
             int movementAmount = 10;
             for (int i = 1; i < 5; i++) {
                 if (mCardsInDeck >= i) {
+                    int offset = movementAmount * (4 - i);
                     CardView card = (CardView) mDeck.get(mCardsInDeck - i);
-                    card.animate().translationX(xLocation + (movementAmount * (4 - i)));
-                    card.animate().translationY(yLocation - (movementAmount * (4 - i)));
-                    card.setReturnPositionX(card.getX());
-                    card.setReturnPositionY(card.getX());
+                    card.animate().translationX(xLocation + offset);
+                    card.animate().translationY(yLocation - offset);
+                    card.setReturnPositionX(xLocation + offset);
+                    card.setReturnPositionY(yLocation - offset);
                 }
             }
         }

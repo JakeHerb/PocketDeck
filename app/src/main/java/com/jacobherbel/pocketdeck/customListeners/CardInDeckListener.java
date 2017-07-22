@@ -36,7 +36,6 @@ public class CardInDeckListener implements View.OnTouchListener {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 Log.i("TAG", "touched down");
-                mHand.hideBelowScreen();
                 final float x = event.getRawX();
                 final float y = event.getRawY();
 
