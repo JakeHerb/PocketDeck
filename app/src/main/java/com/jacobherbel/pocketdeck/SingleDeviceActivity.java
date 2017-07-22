@@ -39,28 +39,8 @@ public class SingleDeviceActivity extends AppCompatActivity {
         mCardDeck = new CardDeck(mContext, wholeScreen, mHand);
         wholeScreen.addView(mHand.getmHandLayout());
         mDetector = new GestureDetectorCompat(this, new MyGestureListener());
-        CardView deckSpot = (CardView) findViewById(R.id.deckPlacementSpot);
-        mCardDeck.place(deckSpot.getX(), deckSpot.getY());
-        //wholeScreen.removeView(deckSpot);
+        mCardDeck.place(mContext.getResources().getDisplayMetrics().widthPixels / 2, 400);
 
-    }
-
-
-    // Shows the user the top card from the deck, and allows them to add it to their hand
-    public void getTopCard(View view) {
-        Button keepbtn = (Button) findViewById(R.id.newCardBtn);
-        CardView topCard = (CardView) findViewById(R.id.card1);
-        if (keepbtn.getText().equals("Grab a new card")) {
-            topCard.setCard(mCardDeck.peekLast().getCard());
-            topCard.flipCard();
-            keepbtn.setText("Keep card");
-        } else if (keepbtn.getText().equals("Keep card")) {
-            addToHand(mCardDeck.grabTopCard());
-            topCard.flipCard();
-            keepbtn.setText("Grab a new card");
-        } else {
-            keepbtn.setText("An issue occurred");
-        }
     }
 
     public void addToHand(CardView cardView) {

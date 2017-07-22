@@ -13,34 +13,6 @@
     android:clipToPadding="false"
     tools:context="com.jacobherbel.pocketdeck.SingleDeviceActivity">
 
-    <com.jacobherbel.pocketdeck.cardStuff.CardView
-        android:id="@+id/deckPlacementSpot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/back" />
-
-
-    <com.jacobherbel.pocketdeck.cardStuff.CardView
-        android:id="@+id/card1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/deckPlacementSpot"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/back"/>
-
-    <Button
-        android:id="@+id/newCardBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:text="Grab a new card"
-        android:layout_below="@id/card1"
-        android:onClick="getTopCard"/>
-
     <Button
         android:id="@+id/cutDeckBtn"
         android:layout_width="wrap_content"
@@ -48,7 +20,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:text="Cut the Deck"
-        android:layout_below="@id/newCardBtn"
         android:onClick="cutDeck"/>
 
     <Button

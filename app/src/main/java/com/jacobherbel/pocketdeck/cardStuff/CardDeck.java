@@ -64,7 +64,10 @@ public class CardDeck {
     // Animates the movement of the cards to simulate taking a card from the top
     public void rearrange() {
         if (mCardsInDeck >= 4) {
-            mParent.addView(mDeck.get(mCardsInDeck - 4));
+            CardView newCard = mDeck.get(mCardsInDeck - 4);
+            mParent.addView(newCard);
+            newCard.setX(xLocation);
+            newCard.setY(yLocation);
             for (int i = mCardsInDeck - 4; i < mCardsInDeck; i++) {
                 mDeck.get(i).bringToFront();
             }
