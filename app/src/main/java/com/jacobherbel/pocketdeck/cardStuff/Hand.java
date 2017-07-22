@@ -45,7 +45,6 @@ public class Hand {
     public void add(CardView card) {
         rescale(SCALE_FACTOR, card);
         mHand.add(card);
-        card.setIsInHand(true);
         mHandLayout.addView(card);
         card.setOnTouchListener(new CardInHandListener((RelativeLayout) mHandLayout.getParent(), this));
         mCardsInHand++;
@@ -55,7 +54,9 @@ public class Hand {
         card.animate().translationY(card.getReturnPositionY() + setVerticalDisplacement(card))
                 .translationX(card.getReturnPositionX())
                 .setDuration(0);
-        card.flipCard();
+        if (!card.isRevealed()) {
+            card.flipCard();
+        }
     }
 
     public void rescale(float scaleFactor, CardView card) {
@@ -104,7 +105,6 @@ public class Hand {
 
     // Returns the first occurance of the given card from the hand while also removing it from the hand
     public CardView pullFromHand(CardView card) {
-        card.setIsInHand(false);
         mHandLayout.removeView(card);
         mHand.removeFirstOccurrence(card);
         mCardsInHand--;
@@ -129,6 +129,7 @@ public class Hand {
                     .translationY(card.getReturnPositionY() + setVerticalDisplacement(card))
                     .setDuration(200);
         }
+        mHandLayout.bringToFront();
         isHidden = false;
     }
 

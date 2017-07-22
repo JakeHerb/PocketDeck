@@ -15,7 +15,6 @@ public class CardView extends ImageView {
 
     private Card mCard;
     private boolean mRevealed;
-    private boolean mIsInHand;
     private float mReturnPositionX;
     private float mReturnPositionY;
     public CardView(Context context) {
@@ -131,11 +130,7 @@ public class CardView extends ImageView {
 
     public void setReturnPositionY(float y ) {mReturnPositionY = y;}
 
-    public void setIsInHand(boolean bool) {mIsInHand = bool;}
-
     public float getReturnPositionX() {return mReturnPositionX;}
 
     public float getReturnPositionY() {return mReturnPositionY;}
-
-    public boolean getIsInHand() {return mIsInHand;}
 }
