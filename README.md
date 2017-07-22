@@ -8,11 +8,15 @@ Current TODO's are:
 
 [X] Improve hand animations that change depending on the users device.
 
-[ ] Add ability to detect users touching specific cards, and react accordingly
+[X] Add ability to detect users touching specific cards, and react accordingly
+
+[ ] Add longpress ability to the Deck, bringing up "Shuffle", "Cut", and "Move" buttons
 
 [ ] Get rid of buttons
 
-[ ] Allow user to place cards on their "table"
+[X] Allow user to place cards on their "table"
+
+[ ] Create CardOnTableListener() that allows users to add cards back to the hand, flip cards over, or "burn" cards
 
 [ ] Add sounds
 
