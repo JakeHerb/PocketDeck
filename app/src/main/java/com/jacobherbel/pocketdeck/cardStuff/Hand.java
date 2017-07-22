@@ -57,6 +57,9 @@ public class Hand {
         if (!card.isRevealed()) {
             card.flipCard();
         }
+        if (isHidden) {
+            isHidden = false;
+        }
     }
 
     public void rescale(float scaleFactor, CardView card) {

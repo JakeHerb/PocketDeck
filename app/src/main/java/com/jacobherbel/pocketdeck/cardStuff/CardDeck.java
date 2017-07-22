@@ -46,7 +46,21 @@ public class CardDeck {
         mDeck.getLast().setOnTouchListener(new CardInDeckListener(mContext, mParent, mHand, this));
     }
 
-    // First time the deck is placed, it sets locations for the visible cards
+    // Moves the deck in the x and y amounts given
+    public void move(float dX, float dY) {
+        xLocation += dX;
+        yLocation += dY;
+        for (int i = 1; i < 5; i++) {
+            if (mCardsInDeck >= i) {
+                CardView card = (CardView) mDeck.get(mCardsInDeck - i);
+                card.animate().translationXBy(dX)
+                        .translationYBy(dY)
+                        .setDuration(0);
+            }
+        }
+    }
+
+    // Whenever the deck is placed, it sets locations for the visible cards
     public void arrange() {
         int movementAmount = 10;
         for (int i = 1; i < 5; i++) {
