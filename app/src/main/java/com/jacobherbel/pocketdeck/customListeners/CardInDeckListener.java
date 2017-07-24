@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.Toast;
 
 import com.jacobherbel.pocketdeck.cardStuff.CardDeck;
 import com.jacobherbel.pocketdeck.cardStuff.CardView;
@@ -28,17 +30,21 @@ public class CardInDeckListener implements View.OnTouchListener {
         mDeck = deck;
     }
 
-    float lastTouchX;
-    float lastTouchY;
+    private float lastTouchX;
+    private float lastTouchY;
+    private long startClickTime;
+    private float moveDistance;
+
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         CardView v = (CardView) view;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 Log.i("TAG", "touched down");
+                moveDistance = 0;
                 final float x = event.getRawX();
                 final float y = event.getRawY();
-
+                startClickTime = System.currentTimeMillis();
                 // Remember where we started
                 lastTouchX = x;
                 lastTouchY = y;
@@ -59,6 +65,7 @@ public class CardInDeckListener implements View.OnTouchListener {
                         .setDuration(0);
                 lastTouchX = x;
                 lastTouchY = y;
+                moveDistance += dY + dX;
                 break;
             }
             case MotionEvent.ACTION_UP: {
@@ -69,6 +76,10 @@ public class CardInDeckListener implements View.OnTouchListener {
                     mDeck.rearrange();
                     Log.i("TAG", "put in hand");
                 } else {
+                    if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout() && Math.abs(moveDistance) < 100) {
+                        Toast.makeText(mContext, "Tapping", Toast.LENGTH_SHORT).show();
+                        // TODO create the buttons
+                    }
                     v.animate().translationY(v.getReturnPositionY())
                             .translationX(v.getReturnPositionX())
                             .setDuration(100);
@@ -77,7 +88,6 @@ public class CardInDeckListener implements View.OnTouchListener {
                 break;
             }
         }
-
         return true;
     }
 

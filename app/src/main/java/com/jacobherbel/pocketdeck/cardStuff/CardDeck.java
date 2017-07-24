@@ -4,11 +4,9 @@ import android.content.Context;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
-
 import com.jacobherbel.pocketdeck.customListeners.CardInDeckListener;
-import com.jacobherbel.pocketdeck.customListeners.CardInHandListener;
-
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
