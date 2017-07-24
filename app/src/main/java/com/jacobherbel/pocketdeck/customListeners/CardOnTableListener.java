@@ -31,6 +31,7 @@ public class CardOnTableListener implements View.OnTouchListener {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 Log.i("TAG", "touched down");
+                v.bringToFront();
                 final float x = event.getRawX();
                 final float y = event.getRawY();
 
