@@ -44,7 +44,7 @@ public class Hand {
     // Add a card to the end of the hand without any specific information or animation
     public void add(CardView card) {
         rescale(SCALE_FACTOR, card);
-        mHand.add(card);
+        mHand.add(setIndex(card), card);
         mHandLayout.addView(card);
         card.setOnTouchListener(new CardInHandListener((RelativeLayout) mHandLayout.getParent(), this));
         mCardsInHand++;
@@ -67,6 +67,21 @@ public class Hand {
         card.setScaleY(scaleFactor);
     }
 
+    // Returns the index at which a card should be placed, based on its x-position.
+    public int setIndex(CardView newCard) {
+        if (isHidden) {
+            return mCardsInHand;
+        }
+        int index = 0;
+        for (CardView card : mHand) {
+            if (newCard.getX() < card.getX()) {
+                return index;
+            }
+            index++;
+        }
+        return mCardsInHand;
+    }
+
     // Dynamically resizes where the cards in the hand are placed.
     public void arrangeCards() {
         float prevCard = 0f;
@@ -84,6 +99,7 @@ public class Hand {
         angleCards();
         for (CardView card : mHand) {
             card.setY(setVerticalDisplacement(card) + card.getReturnPositionY());
+            card.bringToFront();
         }
     }
 

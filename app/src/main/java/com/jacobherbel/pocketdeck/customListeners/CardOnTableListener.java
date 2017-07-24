@@ -28,6 +28,7 @@ public class CardOnTableListener implements View.OnTouchListener {
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         CardView v = (CardView) view;
+        int handThreshold = 1750; // TODO get rid of this magic number
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 Log.i("TAG", "touched down");
@@ -59,7 +60,7 @@ public class CardOnTableListener implements View.OnTouchListener {
             }
             case MotionEvent.ACTION_UP: {
                 Log.i("TAG", "touched up");
-                if (event.getRawY() > 1750) { // TODO get rid of this magic number
+                if (event.getRawY() > handThreshold) { // TODO get rid of this magic number
                     ViewGroup parent = (ViewGroup) v.getParent();
                     parent.removeView(v);
                     mHand.add(v);
