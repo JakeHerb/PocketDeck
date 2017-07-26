@@ -88,8 +88,8 @@ public class CardInHandListener implements View.OnTouchListener{
                     parent.removeView(v);
                     mHand.add(v);
                 } else {
-                    v.setReturnPositionY(lastTouchY);
-                    v.setReturnPositionX(lastTouchX);
+                    v.setReturnPositionY(v.getY());
+                    v.setReturnPositionX(v.getX());
                     v.setOnTouchListener(new CardOnTableListener(mRoot.getContext(), mHand));
                 }
                 break;

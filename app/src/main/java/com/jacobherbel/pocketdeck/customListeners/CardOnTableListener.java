@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jacobherbel.pocketdeck.cardStuff.CardView;
 import com.jacobherbel.pocketdeck.cardStuff.Hand;
@@ -25,6 +27,8 @@ public class CardOnTableListener implements View.OnTouchListener {
 
     float lastTouchX;
     float lastTouchY;
+    private long startClickTime;
+    private float moveDistance;
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         CardView v = (CardView) view;
@@ -35,9 +39,10 @@ public class CardOnTableListener implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN: {
                 Log.i("TAG", "touched down");
                 v.bringToFront();
+                moveDistance = 0;
                 final float x = event.getRawX();
                 final float y = event.getRawY();
-
+                startClickTime = System.currentTimeMillis();
                 // Remember where we started
                 lastTouchX = x;
                 lastTouchY = y;
@@ -73,11 +78,13 @@ public class CardOnTableListener implements View.OnTouchListener {
             }
             case MotionEvent.ACTION_UP: {
                 Log.i("TAG", "touched up");
-                if (event.getRawY() > handThreshold) { // TODO get rid of this magic number
+                if (event.getRawY() > handThreshold) {
                     ViewGroup parent = (ViewGroup) v.getParent();
                     parent.removeView(v);
                     mHand.add(v);
                     Log.i("TAG", "put in hand");
+                } else if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout() && Math.abs(moveDistance) < 100) {
+                    v.flipCard();
                 } else {
                     v.setReturnPositionX(v.getX());
                     v.setReturnPositionY(v.getY());

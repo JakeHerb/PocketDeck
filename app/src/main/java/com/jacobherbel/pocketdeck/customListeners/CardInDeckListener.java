@@ -68,7 +68,7 @@ public class CardInDeckListener implements View.OnTouchListener {
                             .setDuration(0);
                     Log.i("TAG", "moving x by " + dX);
                     lastTouchX = x;
-                    moveDistance += x;
+                    moveDistance += dX;
                 } else {
                     Log.i("TAG", "Touching a wall on X axis");
                 }
@@ -77,7 +77,7 @@ public class CardInDeckListener implements View.OnTouchListener {
                             .setDuration(0);
                     Log.i("TAG", "moving y by " + dY);
                     lastTouchY = y;
-                    moveDistance += y;
+                    moveDistance += dY;
                 } else {
                     Log.i("TAG", "Touching a wall on Y axis");
                 }
@@ -90,15 +90,19 @@ public class CardInDeckListener implements View.OnTouchListener {
                     mHand.add(card);
                     mDeck.rearrange();
                     Log.i("TAG", "put in hand");
+                } else if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout() && Math.abs(moveDistance) < 100) {
+                    Toast.makeText(mContext, "Tapping", Toast.LENGTH_SHORT).show();
+                    v.animate().translationX(v.getReturnPositionX())
+                            .translationY(v.getReturnPositionY())
+                            .setDuration(0);
+                    // TODO create the buttons
                 } else {
-                    if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout() && Math.abs(moveDistance) < 100) {
-                        Toast.makeText(mContext, "Tapping", Toast.LENGTH_SHORT).show();
-                        // TODO create the buttons
-                    }
-                    v.animate().translationY(v.getReturnPositionY())
-                            .translationX(v.getReturnPositionX())
-                            .setDuration(100);
-                    Log.i("TAG", "teleport back");
+                    mRoot.addView(mDeck.grabTopCard());
+                    v.setReturnPositionX(v.getX());
+                    v.setReturnPositionY(v.getY());
+                    v.setOnTouchListener(new CardOnTableListener(mContext, mHand));
+                    mDeck.rearrange();
+                    Log.i("TAG", "Removing card from deck and placing at " + v.getReturnPositionX() + ", " + v.getReturnPositionY());
                 }
                 break;
             }
