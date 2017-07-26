@@ -1,5 +1,6 @@
 package com.jacobherbel.pocketdeck.customListeners;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +26,8 @@ public class CardInHandListener implements View.OnTouchListener{
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         CardView v = (CardView) view;
+        float xBoundary = mRoot.getContext().getResources().getDisplayMetrics().widthPixels - v.getWidth();
+        float yBoundary = mRoot.getContext().getResources().getDisplayMetrics().heightPixels - v.getHeight();
         switch (event.getAction()) {
 
             // Remove the card from the hand layout, straighten it, and place it in the root layout
@@ -57,12 +60,23 @@ public class CardInHandListener implements View.OnTouchListener{
                 final float y = event.getRawY();
                 final float dX = x - lastTouchX;
                 final float dY = y - lastTouchY;
-                Log.i("TAG", "moving: (" + dX + ", " + dY + ")");
-                v.animate().translationXBy(dX)
-                        .translationYBy(dY)
-                        .setDuration(0);
-                lastTouchX = x;
-                lastTouchY = y;
+                // Check if the card is being placed off of the screen
+                if (!(v.getX() + dX > xBoundary || v.getX() + dX < 0)) {
+                    v.animate().translationXBy(dX)
+                            .setDuration(0);
+                    Log.i("TAG", "moving x by " + dX);
+                    lastTouchX = x;
+                } else {
+                    Log.i("TAG", "Touching a wall on X axis");
+                }
+                if (!(v.getY() + dY > yBoundary || v.getY() + dY < 0)) {
+                    v.animate().translationYBy(dY)
+                            .setDuration(0);
+                    Log.i("TAG", "moving y by " + dY);
+                    lastTouchY = y;
+                } else {
+                    Log.i("TAG", "Touching a wall on Y axis");
+                }
                 break;
             }
 

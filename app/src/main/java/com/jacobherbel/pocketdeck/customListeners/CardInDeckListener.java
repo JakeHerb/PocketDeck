@@ -38,6 +38,9 @@ public class CardInDeckListener implements View.OnTouchListener {
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         CardView v = (CardView) view;
+        float xBoundary = mContext.getResources().getDisplayMetrics().widthPixels - v.getWidth();
+        float yBoundary = mContext.getResources().getDisplayMetrics().heightPixels - v.getHeight();
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 Log.i("TAG", "touched down");
@@ -59,13 +62,25 @@ public class CardInDeckListener implements View.OnTouchListener {
                 final float y = event.getRawY();
                 final float dX = x - lastTouchX;
                 final float dY = y - lastTouchY;
-                Log.i("TAG", "moving: (" + dX + ", " + dY + ")");
-                v.animate().translationXBy(dX)
-                        .translationYBy(dY)
-                        .setDuration(0);
-                lastTouchX = x;
-                lastTouchY = y;
-                moveDistance += dY + dX;
+                // Check if the card is being placed off of the screen
+                if (!(v.getX() + dX > xBoundary || v.getX() + dX < 0)) {
+                    v.animate().translationXBy(dX)
+                            .setDuration(0);
+                    Log.i("TAG", "moving x by " + dX);
+                    lastTouchX = x;
+                    moveDistance += x;
+                } else {
+                    Log.i("TAG", "Touching a wall on X axis");
+                }
+                if (!(v.getY() + dY > yBoundary || v.getY() + dY < 0)) {
+                    v.animate().translationYBy(dY)
+                            .setDuration(0);
+                    Log.i("TAG", "moving y by " + dY);
+                    lastTouchY = y;
+                    moveDistance += y;
+                } else {
+                    Log.i("TAG", "Touching a wall on Y axis");
+                }
                 break;
             }
             case MotionEvent.ACTION_UP: {

@@ -28,6 +28,8 @@ public class CardOnTableListener implements View.OnTouchListener {
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         CardView v = (CardView) view;
+        float xBoundary = mContext.getResources().getDisplayMetrics().widthPixels - v.getWidth();
+        float yBoundary = mContext.getResources().getDisplayMetrics().heightPixels - v.getHeight();
         int handThreshold = 1750; // TODO get rid of this magic number
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
@@ -45,17 +47,28 @@ public class CardOnTableListener implements View.OnTouchListener {
             // Keeps track of the difference between where the card was last time you pressed
             // and where it is now, then moves the view accordingly
             case MotionEvent.ACTION_MOVE: {
-                // TODO check if the are low enough to bring the hand back to the screen
+                // TODO check if they are low enough to bring the hand back to the screen
                 final float x = event.getRawX();
                 final float y = event.getRawY();
                 final float dX = x - lastTouchX;
                 final float dY = y - lastTouchY;
-                Log.i("TAG", "moving: (" + dX + ", " + dY + ")");
-                v.animate().translationXBy(dX)
-                        .translationYBy(dY)
-                        .setDuration(0);
-                lastTouchX = x;
-                lastTouchY = y;
+                // Check if the card is being placed off of the screen
+                if (!(v.getX() + dX > xBoundary || v.getX() + dX < 0)) {
+                    v.animate().translationXBy(dX)
+                            .setDuration(0);
+                    Log.i("TAG", "moving x by " + dX);
+                    lastTouchX = x;
+                } else {
+                    Log.i("TAG", "Touching a wall on X axis");
+                }
+                if (!(v.getY() + dY > yBoundary || v.getY() + dY < 0)) {
+                    v.animate().translationYBy(dY)
+                            .setDuration(0);
+                    Log.i("TAG", "moving y by " + dY);
+                    lastTouchY = y;
+                } else {
+                    Log.i("TAG", "Touching a wall on Y axis");
+                }
                 break;
             }
             case MotionEvent.ACTION_UP: {
