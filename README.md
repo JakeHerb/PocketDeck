@@ -12,13 +12,15 @@ Current TODO's are:
 
 [ ] Add longpress ability to the Deck, bringing up "Shuffle", "Cut", and "Move" buttons
 
-[ ] Get rid of buttons
+[ ] Get rid of static buttons
 
 [X] Allow user to place cards on their "table"
 
 [X] Create CardOnTableListener() that allows users to add cards back to the hand, flip cards over, or "burn" cards
 
-[ ] Create ability to place cards into a specific location in the hand, moving the cards around dynamically
+[X] Create ability to place cards into a specific location in the hand, moving the cards around dynamically
+
+[ ] Add support for multi-touch gestures. Example, pinching an area of the screen squeezes all cards between them together
 
 [ ] Add sounds
 
