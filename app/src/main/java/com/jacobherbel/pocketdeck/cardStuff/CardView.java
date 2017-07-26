@@ -2,6 +2,7 @@ package com.jacobherbel.pocketdeck.cardStuff;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ public class CardView extends ImageView {
     private boolean mRevealed;
     private float mReturnPositionX;
     private float mReturnPositionY;
+    private Rect mRectangle;
     public CardView(Context context) {
         super(context);
         init(context);

@@ -63,6 +63,7 @@ public class CardOnTableListener implements View.OnTouchListener {
                             .setDuration(0);
                     Log.i("TAG", "moving x by " + dX);
                     lastTouchX = x;
+                    moveDistance += dX;
                 } else {
                     Log.i("TAG", "Touching a wall on X axis");
                 }
@@ -71,6 +72,7 @@ public class CardOnTableListener implements View.OnTouchListener {
                             .setDuration(0);
                     Log.i("TAG", "moving y by " + dY);
                     lastTouchY = y;
+                    moveDistance += dY;
                 } else {
                     Log.i("TAG", "Touching a wall on Y axis");
                 }
